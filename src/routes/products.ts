@@ -5,4 +5,4 @@ export const routerProducts = Router();
 
 routerProducts.get('/', getAllProducts);
 
-routerProducts.get('/productsByName/:rol/:product', getProductByName);
+routerProducts.get('/:rol/:product', getProductByName);
