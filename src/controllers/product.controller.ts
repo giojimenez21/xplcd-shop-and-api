@@ -4,7 +4,7 @@ import { generateRestrictions, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
 import { ResLocations, ResSearchRead } from "../interfaces/odoo.interface";
 
-interface Body {
+interface Params {
     product: string,
     rol: string
 }
@@ -13,13 +13,14 @@ export const getAllProducts = (req:Request, res: Response) => {
     res.send('Hola');
 }
 
-export const getProductByName = async(req: Request, res: Response) => {
-    const { product, rol }:Body = req.body;
+export const getProductByName = async(req: Request<Params>, res: Response) => {
+    const { product, rol } = req.params;
+    
     try {
         const numberAuth = await loginOdoo();
         if(!numberAuth) return res.status(401).json({ msg: 'Credenciales incorrectas.'} );
 
-        const { fields, restrictions } = generateRestrictions(rol);
+        const { fields, restrictions } = generateRestrictions(rol.toUpperCase());
 
         const bodyPetition = {
             jsonrpc: "2.0",
