@@ -1,5 +1,5 @@
 import { odooClient } from "../config";
-import { LoginOdoo, ResLoginOdoo } from "../interfaces/odoo.interface"
+import { LoginOdoo, ResLogin } from "../interfaces/odoo.interface"
 
 export const loginOdoo = async():Promise<number | boolean> => {
     const body:LoginOdoo = {
@@ -16,9 +16,7 @@ export const loginOdoo = async():Promise<number | boolean> => {
         }
     };
 
-    const res = await odooClient.get<ResLoginOdoo>('/', {
-        data: body
-    });
+    const res = await odooClient.get<ResLogin>('/', { data: body });
 
     return res.data.result;
 }

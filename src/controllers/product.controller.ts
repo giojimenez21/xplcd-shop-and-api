@@ -1,9 +1,10 @@
 import { Response, Request, } from "express";
 import { odooClient } from "../config";
+import { generateRestrictions, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
-import { ResSearchRead } from "../interfaces/odoo.interface";
+import { ResLocations, ResSearchRead } from "../interfaces/odoo.interface";
 
-interface body {
+interface Body {
     product: string,
     rol: string
 }
@@ -13,10 +14,12 @@ export const getAllProducts = (req:Request, res: Response) => {
 }
 
 export const getProductByName = async(req: Request, res: Response) => {
-    const { product, rol }:body = req.body;
+    const { product, rol }:Body = req.body;
     try {
         const numberAuth = await loginOdoo();
         if(!numberAuth) return res.status(401).json({ msg: 'Credenciales incorrectas.'} );
+
+        const { fields, restrictions } = generateRestrictions(rol);
 
         const bodyPetition = {
             jsonrpc: "2.0",
@@ -39,22 +42,50 @@ export const getProductByName = async(req: Request, res: Response) => {
                         ["name", "ilike", "LCD"],
                         ["name", "ilike", "TOUCH"],
                     ],
-                    ["id", "name", "list_price", "qty_available"],
+                    fields,
                 ],
             },
         };
 
-        const resClient = await odooClient.get<ResSearchRead>('/', {
-            data: bodyPetition
-        });
+        const bodyPetition2 = {
+            jsonrpc: "2.0",
+            method: "call",
+            params: {
+                service: "object",
+                method: "execute",
+                args: [
+                    process.env.DB,
+                    numberAuth,
+                    process.env.PASSWORD,
+                    "stock.quant",
+                    "search_read",
+                    [
+                        "&",
+                        ["product_id", "ilike", product],
+                        "|",
+                        "|",
+                        ["product_id", "ilike", "DISP"],
+                        ["product_id", "ilike", "LCD"],
+                        ["product_id", "ilike", "TOUCH"],
+                        ...restrictions
+                    ],
+                    ["product_id","location_id","quantity","display_name"],
+                ],
+            },
+        }
+        
+        const promises: Promise<ResSearchRead | ResLocations | any>[] = [
+            odooClient.get("/", { data: bodyPetition }),
+            odooClient.get("/", { data: bodyPetition2 }),
+        ];
+        const [ resClient, resLocations ]= await Promise.all(promises);
+        const productsFinal = orderData(resClient.data.result, resLocations.data.result);
 
-        return res.status(200).json(resClient.data.result);
+        return res.status(200).json(productsFinal);
 
-
-    } catch (error) {
-        console.log(error);
+    } catch (error:any) {
         return res.status(400).json({
-            error
+            error: error.message
         })
     }
 
