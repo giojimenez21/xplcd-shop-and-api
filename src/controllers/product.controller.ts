@@ -82,7 +82,10 @@ export const getProductByName = async(req: Request<Params>, res: Response) => {
         const [ resClient, resLocations ]= await Promise.all(promises);
         const productsFinal = orderData(resClient.data.result, resLocations.data.result);
 
-        return res.status(200).json(productsFinal);
+        return res.status(200).json({
+            status: true,
+            phones: productsFinal
+        });
 
     } catch (error:any) {
         return res.status(400).json({
