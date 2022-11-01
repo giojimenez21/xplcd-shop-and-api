@@ -12,7 +12,6 @@ app.use(cors());
 
 app.use(express.json());
 
-
 app.use('/products', routerProducts);
 
 app.listen(PORT, () => {
