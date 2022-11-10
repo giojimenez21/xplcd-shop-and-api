@@ -1,5 +1,5 @@
 import { Response, Request, } from "express";
-import { odooClient } from "../config";
+import { odooClient } from "../clients";
 import { generateRestrictions, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
 import { ResLocations, ResSearchRead } from "../interfaces/odoo.interface";

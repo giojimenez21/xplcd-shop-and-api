@@ -1,4 +1,4 @@
-import { ROLES } from "../config";
+import { ROLES } from "../constants";
 
 export const generateRestrictions = (rol:string) => {
     const rolFind = ROLES.find(r => r.rolName === rol);

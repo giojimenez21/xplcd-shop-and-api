@@ -1,4 +1,4 @@
-import { odooClient } from "../config";
+import { odooClient } from "../clients";
 import { LoginOdoo, ResLogin } from "../interfaces/odoo.interface"
 
 export const loginOdoo = async():Promise<number | boolean> => {
