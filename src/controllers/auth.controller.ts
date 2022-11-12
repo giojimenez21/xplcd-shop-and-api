@@ -53,5 +53,15 @@ export const loginUser = async(req:Request<{},{},BodyLogin>, res: Response) => {
     } catch (error) {
         return res.status(500).json(error);
     }
+}
 
+export const renewToken = async(req: Request, res: Response) => {
+    const { id } = req;
+    const token = await generateJWT(id!);
+    const user = await User.findOne({where:{id}});
+
+    return res.status(200).json({
+        user,
+        token
+    });
 }

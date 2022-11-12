@@ -2,15 +2,58 @@ import { Response, Request, } from "express";
 import { odooClient } from "../clients";
 import { generateRestrictions, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
-import { ResLocations, ResSearchRead } from "../interfaces/odoo.interface";
+import { ResAllProducts, ResLocations, ResSearchRead } from "../interfaces/odoo.interface";
+
+
+export const getAllProducts = async(req:Request, res: Response) => {
+    try {
+        const numberAuth = await loginOdoo();
+        if (!numberAuth) return res.status(401).json({ msg: "Credenciales incorrectas." });
+
+        const bodyPetition = {
+            jsonrpc: "2.0",
+            method: "call",
+            params: {
+                service: "object",
+                method: "execute",
+                args: [
+                    process.env.DB,
+                    numberAuth,
+                    process.env.PASSWORD,
+                    "product.template",
+                    "search_read",
+                    [
+                        "&",
+                        ["name", "ilike", "sam"],
+                        "|",
+                        "|",
+                        ["name", "ilike", "DISP"],
+                        ["name", "ilike", "LCD"],
+                        ["name", "ilike", "TOUCH"],
+                    ],
+                    ["id", "name", "list_price", "qty_available"],
+                ],
+            },
+        };
+
+        const response = await odooClient.get<ResAllProducts>("/", {
+            data: bodyPetition,
+        });
+
+        
+        return res.status(201).json({
+            ok: true,
+        });
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json(error);
+    }
+}
 
 interface Params {
     product: string,
     rol: string
-}
-
-export const getAllProducts = (req:Request, res: Response) => {
-    res.send('Hola');
 }
 
 export const getProductByName = async(req: Request<Params>, res: Response) => {
@@ -87,10 +130,9 @@ export const getProductByName = async(req: Request<Params>, res: Response) => {
             phones: productsFinal
         });
 
-    } catch (error:any) {
-        return res.status(400).json({
-            error: error.message
-        })
+    } catch (error) {
+        console.log(error);
+        return res.status(400).json(error)
     }
 
 }
