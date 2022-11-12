@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { getAllProducts, getProductByName } from '../controllers';
+import { changeStatusSale, getAllProducts, getAllSales, getProductByName, newSale } from '../controllers';
 
 export const routerProducts = Router();
 
@@ -7,4 +7,8 @@ routerProducts.get('/', getAllProducts);
 
 routerProducts.get('/:rol/:product', getProductByName);
 
-routerProducts.get('/saludo', (req, res) => res.send('hola'))
+routerProducts.get('/sales', getAllSales);
+
+routerProducts.post('/newSale', newSale);
+
+routerProducts.post('/changeStatusSale/:id', changeStatusSale);

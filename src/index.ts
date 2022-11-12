@@ -22,6 +22,4 @@ db.sync().then(() => console.log('DB online.'));
 
 createAdmin().then(() => console.log('Verify admin complete.'))
 
-console.log(process.env)
-
 app.listen(PORT, () => console.log('Listening http://localhost:' + PORT));

@@ -7,6 +7,8 @@ interface SaleModel extends Model<InferAttributes<SaleModel>, InferCreationAttri
     price: number;
     quantity: number;
     total: number;
+    status: CreationOptional<"OPEN" | "CLOSE">;
+    payment_method: CreationOptional<"CASH | CARD">;
     id_client: number;
 }
 
@@ -29,6 +31,12 @@ export const Sale = db.define<SaleModel>(
         },
         total: {
             type: DataTypes.FLOAT
+        },
+        status: {
+            type: DataTypes.STRING
+        },
+        payment_method: {
+            type: DataTypes.STRING
         },
         id_client: {
             type: DataTypes.INTEGER

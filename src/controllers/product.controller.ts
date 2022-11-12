@@ -1,8 +1,10 @@
 import { Response, Request, } from "express";
+import { json } from "sequelize";
 import { odooClient } from "../clients";
 import { generateRestrictions, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
 import { ResAllProducts, ResLocations, ResSearchRead } from "../interfaces/odoo.interface";
+import { Sale, User } from "../models";
 
 
 export const getAllProducts = async(req:Request, res: Response) => {
@@ -134,5 +136,63 @@ export const getProductByName = async(req: Request<Params>, res: Response) => {
         console.log(error);
         return res.status(400).json(error)
     }
+}
 
+export const getAllSales = async(req: Request, res: Response) => {
+    try {
+        const sales = await Sale.findAll({include: {
+            model: User,
+            attributes: ["name", "email"]
+        }});
+
+        return res.status(200).json({
+            sales
+        });
+
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
+interface Sale {
+    product: string;
+    price: number;
+    quantity: number;
+    total: number;
+    id_client: number;
+}
+
+export const newSale = async(req: Request<{},{},Sale>, res: Response) => {
+    const saleData = req.body;
+
+    try {
+        await Sale.create({...saleData});
+        return res.status(200).json({
+            msg: "Su compra  fue realizada, espere que se contacten con usted via correo electrónico."
+        });
+
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+}
+
+interface ParamsSale {
+    id: number;
+}
+
+export const changeStatusSale = async(req: Request<ParamsSale>, res: Response) => {
+    const { id } = req.params;
+    try {
+        const saleExist = await Sale.findOne({where: {id}});
+        if(!saleExist) return res.status(400).json({msg: "No existe ninguna compra con ese id."});
+
+        saleExist.status === "OPEN"
+            ? await Sale.update({ status: "CLOSE" }, { where: { id } })
+            : await Sale.update({ status: "OPEN" }, { where: { id } });
+
+        return res.status(200).json({msg: "Cambio de status exitoso."});
+
+    } catch (error) {
+        return res.status(500).json(error)
+    }
 }

@@ -1,5 +1,6 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { db } from "../database";
+import { Sale } from "./Sale";
 
 interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
     id: CreationOptional<number>;
@@ -34,3 +35,6 @@ export const User = db.define<UserModel>(
         freezeTableName: true
     }
 );
+
+User.hasMany(Sale, { foreignKey: "id_client" });
+Sale.belongsTo(User, { foreignKey: "id_client" });
