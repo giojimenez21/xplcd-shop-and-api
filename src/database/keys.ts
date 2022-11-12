@@ -1,14 +1,15 @@
 import configDev from "./dev";
 import configProd from "./prod";
 
-export interface configDBSequelize {
+export interface configDB {
     user: string;
     password: string;
     db: string;
     host: string;
+    api: string;
 }
 
-let configDB:configDBSequelize;
+let configDB:configDB;
 
 if (process.env.NODE_ENV !== "production") {
     configDB = configDev;

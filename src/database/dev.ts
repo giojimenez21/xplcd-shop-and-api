@@ -1,10 +1,11 @@
-import { configDBSequelize } from "./keys";
+import { configDB } from "./keys";
 
-const configDev:configDBSequelize = {
+const configDev:configDB = {
     user: "root",
     password:"root",
     db: "xplcd_shop_local",
-    host: "localhost"
+    host: "localhost",
+    api: "https://xplcdfactory.odoo.com/jsonrpc"
 }
 
 export default configDev;

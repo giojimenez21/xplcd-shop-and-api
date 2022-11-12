@@ -1,7 +1,8 @@
 import axios from "axios";
+import configDB from "../database/keys";
 
 export const odooClient = axios.create({
-    baseURL: process.env.BASEURL,
+    baseURL: configDB.api,
     headers: {
         'Content-type': 'application/json'
     }
