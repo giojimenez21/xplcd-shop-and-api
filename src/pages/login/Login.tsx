@@ -1,5 +1,5 @@
 import LoginForm from "./components/LoginForm";
-import LoginContainer from "./styled-components/LoginContainer.styled";
+import LoginContainer from "./styled-components/AuthContainer.styled";
 
 const Login = () => {
     return (

@@ -1,5 +1,5 @@
 export { default as Navbar } from './navbar/Navbar';
 export * from './navbar/constants/ItemsByRole';
-export { default as NavbarContainer } from './navbar/styled-components/NavbarContainer';
-export { default as NavbarItems } from './navbar/styled-components/NavbarItems';
+export * from './navbar/styled-components';
+export { default as ButtonCustom } from './ui/ButtonCustom';
 export { default as Logo } from './ui/Logo';

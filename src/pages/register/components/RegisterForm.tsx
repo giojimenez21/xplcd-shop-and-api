@@ -8,16 +8,15 @@ import { Input } from "../../../styled-components";
 import { axiosClient } from "../../../clients/axios.client";
 import { ResponseLogin } from "../../../clients/interface";
 import { AuthContext } from "../../../context";
-import { Link } from "react-router-dom";
 
-const LoginForm: FC = () => {
+const RegisterForm: FC = () => {
     const { dispatchUser } = useContext(AuthContext);
 
     return (
         <>
             <Logo style={{ margin: "0 auto", boxSize: "250px" }} />
             <Text as="h1" fontWeight="bold" textAlign="center" fontSize="2rem">
-                Iniciar sesión
+                Crear cuenta
             </Text>
             <Box
                 width="25px"
@@ -26,40 +25,33 @@ const LoginForm: FC = () => {
                 backgroundColor="primary"
             />
             <Formik
-                initialValues={{ email: "", password: "" }}
-                onSubmit={async (values) => {
-                    const response = await axiosClient.post<ResponseLogin>("/auth/login",values);
+                initialValues={{ name:"", email: "", password: "" }}
+                onSubmit={async(values) => {
+                    const response = await axiosClient.post<ResponseLogin>('/auth/register', values);
                     localStorage.setItem("token", response.data.token);
-                    dispatchUser({type: "login",payload: response.data.user});
+                    dispatchUser({ type: "login", payload: response.data.user });
                 }}
                 validationSchema={Yup.object({
+                    name: Yup.string().required('El nombre es obligatorio.'),
                     email: Yup.string().email("Debe ingresar un correo con el formato adecuado.")
-                    .required("Debe ingresar un correo."),
+                        .required("Debe ingresar un correo."),
                     password: Yup.string().required("Debe ingresar una contraseña"),
                 })}
             >
                 {(formik) => (
                     <Form noValidate>
+                        <Input placeholder="Nombre completo" name="name" />
                         <Input placeholder="Correo electrónico" name="email" />
                         <Input
                             placeholder="Contraseña"
                             name="password"
                             type="password"
                         />
-                        <Box display="flex" justifyContent="center" gap="1rem">
-                            <Link to="/register">
-                                <ButtonCustom
-                                    text="Crear cuenta"
-                                    styles={{ backgroundColor: "primary" }}
-                                />
-                            </Link>
-
-                            <ButtonCustom
-                                text="Ingresar"
-                                type="submit"
-                                styles={{ backgroundColor: "secondary" }}
-                            />
-                        </Box>
+                        <ButtonCustom
+                            text="Crear cuenta"
+                            type="submit"
+                            styles={{ backgroundColor: "primary", margin: "0 auto", display: "block" }}
+                        />
                     </Form>
                 )}
             </Formik>
@@ -67,4 +59,4 @@ const LoginForm: FC = () => {
     );
 };
 
-export default LoginForm;
+export default RegisterForm;

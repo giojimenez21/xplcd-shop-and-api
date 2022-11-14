@@ -2,7 +2,7 @@ import { Spinner } from "@chakra-ui/react";
 import { FC, useContext, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { Login } from "../pages";
+import { Login, Register } from "../pages";
 import PublicRoute from "./PublicRoute";
 import PrivateRoute from "./PrivateRoute";
 import { AuthContext } from "../context";
@@ -37,6 +37,16 @@ const AppRouter: FC = () => {
                     element={
                         <PublicRoute user={user}>
                             <Login />
+                        </PublicRoute>
+                    }
+                />
+
+                <Route
+                    index
+                    path="/register"
+                    element={
+                        <PublicRoute user={user}>
+                            <Register />
                         </PublicRoute>
                     }
                 />

@@ -1,5 +1,10 @@
+export { default as DetailProduct } from './detailProduct/DetailProduct';
+export { default as DetailProductContainer } from './detailProduct/styled-components/DetailProductContainer.styled';
 export { default as Login } from './login/Login';
 export { default as LoginForm } from './login/components/LoginForm';
-export { default as LoginContainer } from './login/styled-components/LoginContainer.styled';
+export { default as AuthContainer } from './login/styled-components/AuthContainer.styled';
 export { default as Products } from './products/Products';
-export { default as ProductsContainer}  from './products/styled-components/ProductsContainer.styled';
+export { default as ProductCard } from './products/component/ProductCard';
+export { default as ProductsContainer } from './products/styled-components/ProductsContainer.styled';
+export { default as Register } from './register/Register';
+export { default as RegisterForm } from './register/components/RegisterForm';
