@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from "express";
 import { generateJWT } from '../helpers';
-import { User } from "../models";
+import { Sale, User } from "../models";
 
 interface BodyRegister {
     name: string;

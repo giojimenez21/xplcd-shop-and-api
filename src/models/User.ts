@@ -35,6 +35,3 @@ export const User = db.define<UserModel>(
         freezeTableName: true
     }
 );
-
-User.hasMany(Sale, { foreignKey: "id_client" });
-Sale.belongsTo(User, { foreignKey: "id_client" });

@@ -5,9 +5,9 @@ export const routerProducts = Router();
 
 routerProducts.get('/', getAllProducts);
 
-routerProducts.get('/:rol/:product', getProductByName);
+routerProducts.get('/getProducts/:rol/:product', getProductByName);
 
-routerProducts.get('/:id', getProductById);
+routerProducts.get('/getProductById/:id', getProductById);
 
 routerProducts.get('/sales', getAllSales);
 
