@@ -4,7 +4,7 @@ import { Formik, Form } from "formik";
 import { Box, Text } from "@chakra-ui/react";
 
 import { ButtonCustom, Logo } from "../../../components";
-import { Input } from "../../../styled-components";
+import { InputStyled } from "../../../styled-components";
 import { axiosClient } from "../../../clients/axios.client";
 import { ResponseLogin } from "../../../clients/interface";
 import { AuthContext } from "../../../context";
@@ -40,9 +40,9 @@ const RegisterForm: FC = () => {
             >
                 {(formik) => (
                     <Form noValidate>
-                        <Input placeholder="Nombre completo" name="name" />
-                        <Input placeholder="Correo electrónico" name="email" />
-                        <Input
+                        <InputStyled placeholder="Nombre completo" name="name" />
+                        <InputStyled placeholder="Correo electrónico" name="email" />
+                        <InputStyled
                             placeholder="Contraseña"
                             name="password"
                             type="password"

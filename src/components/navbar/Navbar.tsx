@@ -1,5 +1,5 @@
 import { BiSearchAlt } from "react-icons/bi";
-import { Input, InputGroup, InputLeftAddon, InputRightAddon } from "@chakra-ui/react";
+import { Box, Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 
 import Logo from "../ui/Logo";
 import { itemsNavbar } from "./constants/ItemsByRole";
@@ -8,7 +8,16 @@ import { NavbarContainer, NavbarItems } from "./styled-components";
 const Navbar = () => {
     return (
         <NavbarContainer>
-            <Logo style={{ boxSize: "40px" }} />
+            <Box
+                display="flex"
+                color="white"
+                fontWeight="bold"
+                alignItems="center"
+                gap="0.5rem"
+            >
+                <Logo style={{ boxSize: "40px" }} />
+                <Text>LCD Factory</Text>
+            </Box>
             <InputGroup width="3xl">
                 <Input type="search" placeholder="Buscar productos" backgroundColor="white"/>
                 <InputRightAddon children={<BiSearchAlt size="1.5rem"/>} />

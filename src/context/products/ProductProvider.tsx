@@ -8,14 +8,7 @@ interface Iprops {
 }
 
 export const initalStateProducts: ProductState = {
-    products: [
-        {
-            id: 0,
-            name: "",
-            list_price: 0,
-            qty_available: 0,
-        },
-    ],
+    cart: []
 };
 
 const ProductProvider:FC<Iprops> = ({children}) => {

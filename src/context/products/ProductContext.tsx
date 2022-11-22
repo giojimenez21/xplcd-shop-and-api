@@ -1,15 +1,10 @@
 import { createContext, Dispatch } from "react";
+import { ProductCart } from "./product.interface";
 import { ProductsAction } from "./product.reducer";
 
-export interface Product {
-    id: number;
-    name: string;
-    list_price: number;
-    qty_available: number;
-}
 
 export interface ProductState {
-    products: Product[]
+    cart: ProductCart[]
 }
 
 interface ProductProps {

@@ -1,5 +1,6 @@
 import { Box, Button } from "@chakra-ui/react";
 import { FC, useContext } from "react";
+import { Link } from "react-router-dom";
 import { AuthContext } from "../../../context";
 import { ItemNavbar } from "../constants/ItemsByRole";
 
@@ -21,14 +22,15 @@ const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
             {itemsNavbar
                 .filter((item) => item.role === user.role)
                 .map((item, i) => (
-                    <Button
-                        key={i}
-                        backgroundColor="primary"
-                        color="white"
-                        _hover={{ color: "gray.200" }}
-                    >
-                        {item.name}
-                    </Button>
+                    <Link to={`${item.path}`} key={i}>
+                        <Button
+                            backgroundColor="primary"
+                            color="white"
+                            _hover={{ color: "gray.200" }}
+                        >
+                            {item.name}
+                        </Button>
+                    </Link>
                 ))}
             <Button onClick={handleLogout}>Cerrar sesión</Button>
         </Box>

@@ -1,31 +1,24 @@
-import { Spinner } from "@chakra-ui/react";
-import { useContext, useEffect, useState } from "react"
-import { axiosClient } from "../../clients/axios.client";
-import { ResponseProducts } from "../../clients/interface";
-import { ProductContext } from "../../context";
+
+import { useAxios } from "../../hooks";
 import ProductCard from "./component/ProductCard"
+import { SpinnerStyled } from "../../styled-components";
+import { ResponseProduct } from "../../clients/interface";
 import ProductsContainer from "./styled-components/ProductsContainer.styled"
 
 const Products = () => {
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const { productState, dispatchProduct } = useContext(ProductContext);
 
-    useEffect(() => {
-        axiosClient.get<ResponseProducts>('/products')
-            .then((response) => {
-                setIsLoading(false);
-                dispatchProduct({type: 'getAllProducts', payload: response.data.phones});
-            })
-            .catch(() => setIsLoading(false));
-    }, []);
+    const { isLoading, response } = useAxios<ResponseProduct[]>([],{
+        url: "/products",
+        method: "GET"
+    });
 
     if(isLoading) {
-        return <Spinner />
+        return <SpinnerStyled />
     }
     
     return (
         <ProductsContainer>
-            {productState.products.map((product) => (
+            {response.map((product) => (
                 <ProductCard product={product} key={product.id}/>
             ))}
         </ProductsContainer>

@@ -1,4 +1,5 @@
 export { default as DetailProduct } from './detailProduct/DetailProduct';
+export { default as DetailProductCard } from './detailProduct/components/DetailProductCard';
 export { default as DetailProductContainer } from './detailProduct/styled-components/DetailProductContainer.styled';
 export { default as Login } from './login/Login';
 export { default as LoginForm } from './login/components/LoginForm';
@@ -8,3 +9,7 @@ export { default as ProductCard } from './products/component/ProductCard';
 export { default as ProductsContainer } from './products/styled-components/ProductsContainer.styled';
 export { default as Register } from './register/Register';
 export { default as RegisterForm } from './register/components/RegisterForm';
+export { default as ShopCart } from './shopCart/ShopCart';
+export { default as ShopItem } from './shopCart/components/ShopItem';
+export { default as ShopList } from './shopCart/components/ShopList';
+export { default as ShopCartContainer } from './shopCart/styled-components/ShopCartContainer.styled';

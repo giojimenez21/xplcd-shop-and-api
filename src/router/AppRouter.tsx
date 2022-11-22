@@ -8,6 +8,7 @@ import PrivateRoute from "./PrivateRoute";
 import { AuthContext } from "../context";
 import ClientRouter from "./routesByRole/ClientRouter";
 import { checkSession } from "../helpers/checkSession";
+import { SpinnerStyled } from "../styled-components";
 
 const AppRouter: FC = () => {
     const [isloading, setIsloading] = useState<boolean>(true);
@@ -25,7 +26,7 @@ const AppRouter: FC = () => {
     
 
     if (isloading) {
-        return <Spinner size="xl"/>
+        return <SpinnerStyled />
     }
 
     return (

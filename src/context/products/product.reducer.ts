@@ -1,13 +1,15 @@
-import { Product, ProductState } from "./ProductContext";
+import { ProductCart } from "./product.interface";
+import { ProductState } from "./ProductContext";
 
 export type ProductsAction = 
-    |{ type: 'getAllProducts', payload: Product[] }
+    | { type: 'addCar', payload: ProductCart }
 
 export const productReducer = (state:ProductState, action:ProductsAction):ProductState => {
     switch (action.type) {
-        case 'getAllProducts':
+        case 'addCar': 
             return {
-                products: action.payload
+                ...state,
+                cart: [...state.cart, action.payload]
             }
         default:
             return state;
