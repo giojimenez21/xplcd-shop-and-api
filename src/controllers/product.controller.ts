@@ -126,9 +126,10 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
             type: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 1],
             color: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 2],
             list_price: resProducts.data.result[0].list_price + 50,
-            quantity: resWarehouse.data.result[0].quantity,
+            quantity: resWarehouse.data.result[0] ? resWarehouse.data.result[0].quantity : 0
         });
     } catch (error) {
+        console.log(error)
         return res.status(500).json(error);
     }
 };

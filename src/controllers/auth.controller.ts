@@ -1,7 +1,7 @@
 import bcrypt from 'bcrypt';
 import { Request, Response } from "express";
 import { generateJWT } from '../helpers';
-import { Sale, User } from "../models";
+import { User } from "../models";
 
 interface BodyRegister {
     name: string;
@@ -17,7 +17,7 @@ export const registerUser = async(req: Request<{},{},BodyRegister>, res: Respons
 
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(password, salt);
-        const userNew = await User.create({ name, email, password: hashPassword, role: "CLIENT" });
+        const userNew = await User.create({ name, email, password: hashPassword, role: "CLIENT", access_to_lists: false });
         const token = await generateJWT(userNew.id);
 
         return res.status(200).json({

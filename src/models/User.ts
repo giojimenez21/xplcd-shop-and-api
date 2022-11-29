@@ -1,6 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { db } from "../database";
-import { Sale } from "./Sale";
 
 interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttributes<UserModel>> {
     id: CreationOptional<number>;
@@ -8,6 +7,7 @@ interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttri
     email: string;
     password: string;
     role: "ADMIN" | "CLIENT";
+    access_to_lists: true | false;
 }
 
 export const User = db.define<UserModel>(
@@ -29,6 +29,9 @@ export const User = db.define<UserModel>(
         },
         role: {
             type: DataTypes.STRING
+        },
+        access_to_lists: {
+            type: DataTypes.BOOLEAN
         }
     },
     {

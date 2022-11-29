@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import { db } from './database';
 import { createAdmin } from './helpers';
-import { routerAuth, routerProducts } from './routes';
+import { routerAdmin, routerAuth, routerLists, routerProducts } from './routes';
 dotenv.config();
 
 
@@ -14,7 +14,11 @@ app.use(cors());
 
 app.use(express.json());
 
-app.use('/auth', routerAuth)
+app.use('/auth', routerAuth);
+
+app.use('/admin', routerAdmin);
+
+app.use('/lists', routerLists);
 
 app.use('/products', routerProducts);
 

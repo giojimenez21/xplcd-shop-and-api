@@ -15,6 +15,7 @@ export const createAdmin = async () => {
             email: process.env.EMAIL_ADMIN!,
             password: hashPassword,
             role: "ADMIN",
+            access_to_lists: true
         });
     } catch (error) {
         console.log(error);
