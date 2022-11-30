@@ -24,7 +24,7 @@ const LoginContainer: FC<IProps> = ({ children }) => {
                     gridColumn={["1 / 13", "3 / 11","4 / 10", "5 / 9"]}
                     margin="0 auto"
                     boxShadow="2xl"
-                    padding="1.5rem"
+                    padding="2rem"
                     width="100%"
                 >
                     {children}

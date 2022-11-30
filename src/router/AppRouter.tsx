@@ -1,4 +1,4 @@
-import { Spinner } from "@chakra-ui/react";
+
 import { FC, useContext, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
@@ -9,6 +9,7 @@ import { AuthContext } from "../context";
 import ClientRouter from "./routesByRole/ClientRouter";
 import { checkSession } from "../helpers/checkSession";
 import { SpinnerStyled } from "../styled-components";
+import AdminRouter from "./routesByRole/AdminRouter";
 
 const AppRouter: FC = () => {
     const [isloading, setIsloading] = useState<boolean>(true);
@@ -56,7 +57,13 @@ const AppRouter: FC = () => {
                     path="/*"
                     element={
                         <PrivateRoute user={user}>
-                            <ClientRouter />
+                            {
+                                user.role === "ADMIN"
+                                ?
+                                <AdminRouter />
+                                :
+                                <ClientRouter />
+                            }
                         </PrivateRoute>
                     }
                 />

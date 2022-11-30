@@ -15,7 +15,7 @@ const Navbar = () => {
                 alignItems="center"
                 gap="0.5rem"
             >
-                <Logo style={{ boxSize: "40px" }} />
+                <Logo style={{ width: "70px" }} />
                 <Text>LCD Factory</Text>
             </Box>
             <InputGroup width="3xl">

@@ -24,5 +24,10 @@ export const itemsNavbar:ItemNavbar[] = [
         name: 'Pedidos de clientes',
         role: 'ADMIN',
         path: 'clientespedidos'
+    },
+    {
+        name: 'Usuarios',
+        role: 'ADMIN',
+        path: 'usuarios'
     }
 ]

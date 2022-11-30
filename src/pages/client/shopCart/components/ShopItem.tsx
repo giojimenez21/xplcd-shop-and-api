@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { Box, Divider, Text } from "@chakra-ui/react";
-import { ProductCart } from "../../../context/products/product.interface";
+import { ProductCart } from "../../../../context/products/product.interface";
 
 interface IProps {
     product: ProductCart;

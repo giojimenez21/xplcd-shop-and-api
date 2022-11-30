@@ -15,7 +15,7 @@ const LoginForm: FC = () => {
 
     return (
         <>
-            <Logo style={{ margin: "0 auto", boxSize: "250px" }} />
+            <Logo style={{ margin: "0 auto", width: "240px" }} />
             <Text as="h1" fontWeight="bold" textAlign="center" fontSize="2rem">
                 Iniciar sesión
             </Text>

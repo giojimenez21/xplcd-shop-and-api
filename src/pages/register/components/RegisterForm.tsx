@@ -14,7 +14,7 @@ const RegisterForm: FC = () => {
 
     return (
         <>
-            <Logo style={{ margin: "0 auto", boxSize: "250px" }} />
+            <Logo style={{ margin: "0 auto", width: "240px" }} />
             <Text as="h1" fontWeight="bold" textAlign="center" fontSize="2rem">
                 Crear cuenta
             </Text>

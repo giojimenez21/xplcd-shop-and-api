@@ -1,9 +1,8 @@
 import { FC } from "react";
 import { Link } from "react-router-dom";
 import { Box, Text } from "@chakra-ui/react"
-
-import { ButtonCustom } from "../../../components";
-import { ResponseProduct } from "../../../clients/interface";
+import { ButtonCustom } from "../../../../components";
+import { ResponseProduct } from "../../../../clients/interface";
 
 interface IProps {
     product: ResponseProduct

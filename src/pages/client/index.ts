@@ -1,0 +1,11 @@
+export { default as DetailProductCard } from './detailProduct/components/DetailProductCard';
+export * from './detailProduct';
+export { default as DetailCardContainer } from './detailProduct/styled-components/DetailCardContainer.styled';
+export { default as DetailProductContainer } from './detailProduct/styled-components/DetailProductContainer.styled';
+export { default as Products } from './products/Products';
+export { default as ProductCard } from './products/component/ProductCard';
+export { default as ProductsContainer } from './products/styled-components/ProductsContainer.styled';
+export { default as ShopCart } from './shopCart/ShopCart';
+export * from './shopCart/components';
+export * from './shopCart/helpers/calculateTotal';
+export { default as ShopCartContainer } from './shopCart/styled-components/ShopCartContainer.styled';

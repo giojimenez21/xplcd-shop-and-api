@@ -10,11 +10,11 @@ import {
     NumberDecrementStepper,
 } from "@chakra-ui/react";
 
-import { useAxios } from "../../../hooks";
-import { ButtonCustom } from "../../../components";
-import { SpinnerStyled } from "../../../styled-components";
-import { ResponseProductId } from "../../../clients/interface";
-import { ProductContext } from "../../../context";
+import { useAxios } from "../../../../hooks";
+import { ButtonCustom } from "../../../../components";
+import { SpinnerStyled } from "../../../../styled-components";
+import { ResponseProductId } from "../../../../clients/interface";
+import { ProductContext } from "../../../../context";
 import DetailCardContainer from "../styled-components/DetailCardContainer.styled";
 
 const DetailProductCard = () => {

@@ -1,6 +1,6 @@
 import { Box, Text } from "@chakra-ui/react"
 import { useContext } from "react"
-import { ProductContext } from "../../../context"
+import { ProductContext } from "../../../../context";
 import { calculateTotal } from "../helpers/calculateTotal";
 
 const Subtotal = () => {

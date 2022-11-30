@@ -1,8 +1,9 @@
 import { FC} from 'react';
 import { Box } from '@chakra-ui/react';
 
-import { ProductCart } from '../../../context/products/product.interface';
+
 import ShopItem from './ShopItem';
+import { ProductCart } from '../../../../context/products/product.interface';
 
 interface IProps {
     shopProducts: ProductCart[]

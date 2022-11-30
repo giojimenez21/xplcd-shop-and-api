@@ -1,8 +1,8 @@
 
-import { useAxios } from "../../hooks";
+import { useAxios } from "../../../hooks";
 import ProductCard from "./component/ProductCard"
-import { SpinnerStyled } from "../../styled-components";
-import { ResponseProduct } from "../../clients/interface";
+import { SpinnerStyled } from "../../../styled-components";
+import { ResponseProduct } from "../../../clients/interface";
 import ProductsContainer from "./styled-components/ProductsContainer.styled"
 
 const Products = () => {
