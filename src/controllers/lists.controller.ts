@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
 import { rolesLists } from "../constants";
-import { Brand, ProductByList } from "../models";
+import { Brand, CompatibilityOfModel, ProductByList, VersionByProduct } from "../models";
 
 export const getLists = async(req: Request, res: Response) => {
     try {
@@ -42,8 +42,41 @@ export const getListByProductName = async(req: Request<ParamsList>, res: Respons
                 ],
             }
         });
-
         return res.status(200).json(products);
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json({msg: error.message});
+    }
+}
+
+interface ParamsListDetail {
+    id: number;
+}
+
+export const getListProductDetail = async(req: Request<ParamsListDetail>, res: Response) => {
+    const { id } = req.params;
+    try {
+        const product = await ProductByList.findOne({
+            attributes: {
+                exclude: ['xp31','xp41','xp51','xp61','xp71', 'quality', 'id_brand']
+            },
+            include: [
+                {
+                    model: Brand,
+                    attributes: {exclude: ['color']}
+                },
+                {
+                    model: CompatibilityOfModel,
+                    attributes: {exclude: ['id_product_by_list']}
+                },
+                {
+                    model: VersionByProduct,
+                    attributes: {exclude: ['id_product_by_list']}
+                }
+            ],
+            where: { id }
+        });
+        return res.status(200).json(product);
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({msg: error.message});
