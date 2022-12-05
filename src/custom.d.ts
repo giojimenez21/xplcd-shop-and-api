@@ -6,6 +6,8 @@ declare global {
         export interface Request {
             id?: number;
             id_odoo?:number;
+            role?: string;
+            access_to_lists?: boolean;
         }
     }
 }

@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-// import { User } from "../models/User";
 
 export const generateJWT = (id: number) =>
     new Promise((resolve, reject) => {
@@ -21,24 +20,3 @@ export const generateJWT = (id: number) =>
             }
         );
     });
-
-/*
-export const validateJWT = async (token: string) => {
-    try {
-        if (token.length < 10) {
-            return null;
-        }
-
-        const { id }: any = jwt.verify(token, process.env.SECRET_JWT!);
-
-        const user = await User.findOne({ where: { id } });
-        if (user) {
-            return user;
-        } else {
-            return null;
-        }
-    } catch (error) {
-        console.log(error);
-    }
-};
-*/

@@ -20,7 +20,7 @@ export const registerUser = async(req: Request<{},{},BodyRegister>, res: Respons
         const userNew = await User.create({ name, email, password: hashPassword, role: "CLIENT", access_to_lists: false });
         const token = await generateJWT(userNew.id);
 
-        return res.status(200).json({
+        return res.status(201).json({
             user: userNew,
             token
         });
@@ -44,8 +44,8 @@ export const loginUser = async(req:Request<{},{},BodyLogin>, res: Response) => {
         const verifyPassword = bcrypt.compareSync(password, userExist.password);
         if(!verifyPassword) return res.status(400).json({msg: "Contraseña incorrecta."});
 
-        const token = await generateJWT(userExist.id);
-        return res.status(201).json({
+        const token = await generateJWT(userExist.id); 
+        return res.status(200).json({
             user: userExist,
             token
         });

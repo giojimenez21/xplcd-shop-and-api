@@ -8,7 +8,7 @@ import {
     ResSearchRead,
     ResWarehouse,
 } from "../interfaces/odoo.interface";
-import { Product, Sale, User } from "../models";
+import { ProductOfSale, Sale, User } from "../models";
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -225,7 +225,7 @@ export const getAllSales = async (req: Request, res: Response) => {
         const sales = await Sale.findAll({
             include: [
                 {
-                    model: Product,
+                    model: ProductOfSale,
                 },
                 {
                     model: User,
@@ -234,9 +234,7 @@ export const getAllSales = async (req: Request, res: Response) => {
             ],
         });
 
-        return res.status(200).json({
-            sales,
-        });
+        return res.status(200).json(sales);
     } catch (error) {
         return res.status(500).json(error);
     }
@@ -266,7 +264,7 @@ export const newSale = async (req: Request<{}, {}, Sale>, res: Response) => {
         });
 
         products.forEach(async (product) => {
-            await Product.create({
+            await ProductOfSale.create({
                 id_sale: sale.id,
                 ...product,
             });
@@ -284,7 +282,7 @@ interface ParamsSale {
     id: number;
 }
 
-export const changeStatusSale = async ( req: Request<ParamsSale>, res: Response) => {
+export const changeStatusSale = async ( req: Request<ParamsSale | any>, res: Response) => {
     const { id } = req.params;
     try {
         const saleExist = await Sale.findOne({ where: { id } });
@@ -297,6 +295,7 @@ export const changeStatusSale = async ( req: Request<ParamsSale>, res: Response)
             : await Sale.update({ status: "OPEN" }, { where: { id } });
 
         return res.status(200).json({ msg: "Cambio de status exitoso." });
+
     } catch (error) {
         return res.status(500).json(error);
     }

@@ -2,7 +2,7 @@ import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, 
 import { db } from "../database";
 import { Sale } from "./Sale";
 
-interface ProductModel extends Model<InferAttributes<ProductModel>, InferCreationAttributes<ProductModel>> {
+interface ProductOfSaleModel extends Model<InferAttributes<ProductOfSaleModel>, InferCreationAttributes<ProductOfSaleModel>> {
     id: CreationOptional<number>;
     name: string;
     price: number;
@@ -10,8 +10,8 @@ interface ProductModel extends Model<InferAttributes<ProductModel>, InferCreatio
     id_sale: number;
 }
 
-export const Product = db.define<ProductModel>(
-    "products",
+export const ProductOfSale = db.define<ProductOfSaleModel>(
+    "products_of_sales",
     {
         id: {
             type: DataTypes.INTEGER,
@@ -37,5 +37,5 @@ export const Product = db.define<ProductModel>(
 );
 
 
-Sale.hasMany(Product, { foreignKey: "id_sale" });
-Product.belongsTo(Sale, { foreignKey: "id_sale" });
+Sale.hasMany(ProductOfSale, { foreignKey: "id_sale" });
+ProductOfSale.belongsTo(Sale, { foreignKey: "id_sale" });

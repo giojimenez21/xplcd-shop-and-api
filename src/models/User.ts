@@ -6,7 +6,7 @@ interface UserModel extends Model<InferAttributes<UserModel>, InferCreationAttri
     name: string;
     email: string;
     password: string;
-    role: "ADMIN" | "CLIENT";
+    role: string;
     access_to_lists: true | false;
 }
 

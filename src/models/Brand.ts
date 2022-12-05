@@ -1,6 +1,5 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
 import { db } from "../database";
-import { Sale } from "./Sale";
 
 interface BrandModel extends Model<InferAttributes<BrandModel>, InferCreationAttributes<BrandModel>> {
     id: CreationOptional<number>;

@@ -1,13 +1,13 @@
 import { Router } from "express";
 
-import { validateJWT } from "../middlewares";
+import { validateJWT, validateRoles } from "../middlewares";
 import { changeAccessToLists, getUsers } from "../controllers/admin.controller";
 
 export const routerAdmin = Router();
 
-routerAdmin.use(validateJWT);
+routerAdmin.use(validateJWT, validateRoles("ADMIN"));
 
 routerAdmin.get('/users', getUsers);
 
-routerAdmin.put('/changeAccessListUser/:id', changeAccessToLists);
+routerAdmin.put('/changeAccessListUser', changeAccessToLists);
 
