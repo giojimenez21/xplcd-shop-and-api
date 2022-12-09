@@ -1,10 +1,12 @@
 import { createContext, Dispatch } from "react";
-import { ProductCart } from "./product.interface";
+import { ProductCart, Sale } from "./product.interface";
 import { ProductsAction } from "./product.reducer";
 
 
 export interface ProductState {
-    cart: ProductCart[]
+    cart: ProductCart[];
+    salesOpened: Sale[];
+    salesClosed: Sale[];
 }
 
 interface ProductProps {

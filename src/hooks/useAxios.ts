@@ -8,7 +8,6 @@ interface Options {
     data?: any;
 };
 
-const controller = new AbortController();
 /**
  * Custom hook para poder realizar peticiones HTTP
  * @param initialState Estado inicial 
@@ -54,5 +53,5 @@ export const useAxios = <T>(
         request().then( () => setIsLoading( false ));
     }, []);
 
-    return { response, isLoading };
+    return { response, isLoading, setResponse };
 }

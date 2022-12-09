@@ -7,7 +7,6 @@ import {
     Th,
     Td,
     TableContainer,
-    Switch,
     Badge,
 } from "@chakra-ui/react";
 import { ResponseAllUsers } from "../interface";
@@ -34,7 +33,7 @@ const TableUsers: FC<IProps> = ({ users }) => {
                     </Thead>
                     <Tbody>
                         {users.map((user) => (
-                            <Tr>
+                            <Tr key={user.name + user.email}>
                                 <Td>{user.name}</Td>
                                 <Td>{user.email}</Td>
                                 <Td>{user.role}</Td>

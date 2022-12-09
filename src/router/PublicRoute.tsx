@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
 
-import { User } from "../context";
+import { UserSale } from "../context";
 
 interface IProps {
     children: any;
-    user: User;
+    user: UserSale;
 }
 
 const PublicRoute: FC<IProps> = ({ children, user }) => {
