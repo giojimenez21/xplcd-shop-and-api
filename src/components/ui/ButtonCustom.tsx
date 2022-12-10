@@ -5,9 +5,10 @@ interface IProps {
     text: string;
     type?: "button" | "reset" | "submit" | undefined;
     styles?: ButtonProps;
+    onClick?: () => void;
 }
 
-const ButtonCustom:FC<IProps> = ({text,type = "button",styles}) => {
+const ButtonCustom:FC<IProps> = ({text, type = "button", styles, onClick}) => {
     return (
         <Button
             color="white"
@@ -15,6 +16,7 @@ const ButtonCustom:FC<IProps> = ({text,type = "button",styles}) => {
             _hover={{ color: "gray.200" }}
             {...styles}
             type={type}
+            onClick={onClick}
         >
             {text}
         </Button>

@@ -18,11 +18,7 @@ const SalesPage = () => {
 
     useEffect(() => {
         const { salesOpened, salesClosed } = separateSales(sales);
-        dispatchProduct({
-            type: "addSales",
-            payload: { salesOpened, salesClosed },
-        });
-        console.log(productState);
+        dispatchProduct({ type: "addSales", payload: { salesOpened, salesClosed }});
     }, [sales, isLoading]);
 
     if (isLoading) {
@@ -39,12 +35,12 @@ const SalesPage = () => {
                 <TabPanels>
                     <TabPanel>
                         {productState.salesOpened.map((sale) => (
-                            <Order order={sale} />
+                            <Order key={sale.id} order={sale} />
                         ))}
                     </TabPanel>
                     <TabPanel>
                         {productState.salesClosed.map((sale) => (
-                            <Order order={sale} />
+                            <Order key={sale.id} order={sale} />
                         ))}
                     </TabPanel>
                 </TabPanels>
