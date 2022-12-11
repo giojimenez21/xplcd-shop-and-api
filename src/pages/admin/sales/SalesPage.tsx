@@ -6,7 +6,7 @@ import { useAxios } from "../../../hooks";
 import { separateSales } from "./helpers";
 import { SalesContainer } from "./styled-components";
 import { ProductContext, Sale } from "../../../context";
-import { SpinnerStyled } from "../../../styled-components";
+import { AlertStyled, SpinnerStyled } from "../../../styled-components";
 
 
 const SalesPage = () => {
@@ -34,14 +34,26 @@ const SalesPage = () => {
                 </TabList>
                 <TabPanels>
                     <TabPanel>
-                        {productState.salesOpened.map((sale) => (
-                            <Order key={sale.id} order={sale} />
-                        ))}
+                        {productState.salesOpened.length > 0 ? (
+                            productState.salesOpened.map((sale) => (
+                                <Order key={sale.id} order={sale} />
+                            ))
+                        ) : (
+                            <AlertStyled status="warning">
+                                No hay pedidos en esta sección
+                            </AlertStyled>
+                        )}
                     </TabPanel>
                     <TabPanel>
-                        {productState.salesClosed.map((sale) => (
-                            <Order key={sale.id} order={sale} />
-                        ))}
+                        {productState.salesClosed.length > 0 ? (
+                            productState.salesClosed.map((sale) => (
+                                <Order key={sale.id} order={sale} />
+                            ))
+                        ) : (
+                            <AlertStyled status="warning">
+                                No hay pedidos en esta sección
+                            </AlertStyled>
+                        )}
                     </TabPanel>
                 </TabPanels>
             </Tabs>

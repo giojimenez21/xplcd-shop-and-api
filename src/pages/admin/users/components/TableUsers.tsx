@@ -1,4 +1,5 @@
 import { FC } from "react";
+import { AiFillEdit } from "react-icons/ai";
 import {
     Table,
     Thead,
@@ -11,13 +12,13 @@ import {
 } from "@chakra-ui/react";
 import { ResponseAllUsers } from "../interface";
 import { UsersContainer } from "../styled-components";
+import { Link } from "react-router-dom";
 
 interface IProps {
     users: ResponseAllUsers[];
 }
 
 const TableUsers: FC<IProps> = ({ users }) => {
-    
     return (
         <UsersContainer>
             <TableContainer>
@@ -38,11 +39,23 @@ const TableUsers: FC<IProps> = ({ users }) => {
                                 <Td>{user.email}</Td>
                                 <Td>{user.role}</Td>
                                 <Td>
-                                    <Badge colorScheme={user.access_to_lists ? 'green' : 'red'}>
-                                        {user.access_to_lists ? 'Activado' : 'Desactivado'}
+                                    <Badge
+                                        colorScheme={
+                                            user.access_to_lists
+                                                ? "green"
+                                                : "red"
+                                        }
+                                    >
+                                        {user.access_to_lists
+                                            ? "Activado"
+                                            : "Desactivado"}
                                     </Badge>
                                 </Td>
-                                <Td>Click</Td>
+                                <Td>
+                                    <Link to={`/editarUsuario/${user.id}`}>
+                                        <AiFillEdit />
+                                    </Link>
+                                </Td>
                             </Tr>
                         ))}
                     </Tbody>
