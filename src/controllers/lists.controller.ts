@@ -29,6 +29,9 @@ export const getListByProductName = async(req: Request<ParamsList>, res: Respons
     const { name } = req.params;
     try {
         const products = await ProductByList.findAll({
+            attributes: {
+                exclude: ['id_brand']
+            },
             include: {
                 model: Brand,
                 attributes: {
