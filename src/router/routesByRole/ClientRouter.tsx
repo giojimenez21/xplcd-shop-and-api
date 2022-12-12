@@ -1,6 +1,6 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { Navbar } from "../../components";
-import { DetailProduct, Products, ShopCart } from "../../pages";
+import { DetailProduct, ListPage, Products, ShopCart } from "../../pages";
 
 const ClientRouter = () => {
     return (
@@ -11,6 +11,7 @@ const ClientRouter = () => {
                 <Route path="products" element={<Products />} />
                 <Route path="products/:id" element={<DetailProduct />} />
                 <Route path="cart" element={<ShopCart />} />
+                <Route path="listas" element={<ListPage />} />
                 <Route path="*" element={<Navigate to="/" />} />
             </Routes>
         </>

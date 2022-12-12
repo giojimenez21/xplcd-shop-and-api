@@ -8,8 +8,13 @@ export const axiosClient = axios.create({
     baseURL,
     headers: {
         "Content-Type": "application/json",
-        "x-token": localStorage.getItem('token')
     },
+});
+
+axiosClient.interceptors.request.use((req) => {
+    const token = localStorage.getItem("token");
+    req.headers!["x-token"] = token;
+    return req;
 });
 
 axiosClient.interceptors.response.use(

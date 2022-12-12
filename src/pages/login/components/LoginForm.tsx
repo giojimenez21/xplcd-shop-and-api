@@ -1,14 +1,14 @@
 import * as Yup from "yup";
-import { FC, useContext } from "react";
 import { Formik, Form } from "formik";
+import { FC, useContext } from "react";
+import { Link } from "react-router-dom";
 import { Box, Text } from "@chakra-ui/react";
 
+import { AuthContext } from "../../../context";
 import { ButtonCustom, Logo } from "../../../components";
 import { InputStyled } from "../../../styled-components";
 import { axiosClient } from "../../../clients/axios.client";
 import { ResponseLogin } from "../../../clients/interface";
-import { AuthContext } from "../../../context";
-import { Link } from "react-router-dom";
 
 const LoginForm: FC = () => {
     const { dispatchUser } = useContext(AuthContext);
@@ -46,7 +46,7 @@ const LoginForm: FC = () => {
                             name="password"
                             type="password"
                         />
-                        <Box display="flex" justifyContent="center" gap="1rem">
+                        <Box display="flex" justifyContent="center" gap="1rem" flexWrap="wrap">
                             <Link to="/register">
                                 <ButtonCustom
                                     text="Crear cuenta"
@@ -54,10 +54,10 @@ const LoginForm: FC = () => {
                                 />
                             </Link>
 
-                            <ButtonCustom
+                            <ButtonCustom 
                                 text="Ingresar"
                                 type="submit"
-                                styles={{ backgroundColor: "secondary" }}
+                                styles={{ backgroundColor: "secondary"}}
                             />
                         </Box>
                     </Form>

@@ -1,7 +1,7 @@
 import { useAxios } from "../../../hooks";
 import { ResponseAllUsers } from "./interface";
-import TableUsers from "./components/TableUsers";
 import { SpinnerStyled } from "../../../styled-components";
+import { TableUsers } from "./components";
 
 const UsersPage = () => {
     const {isLoading, response: users } = useAxios<ResponseAllUsers[]>([], {

@@ -41,6 +41,7 @@ const Order: FC<IProps> = ({ order }) => {
                 fontSize="sm"
                 display="flex"
                 justifyContent="space-between"
+                flexWrap="wrap"
             >
                 <p>
                     PEDIDO REALIZADO POR: {order.user.name} <br /> Email: {order.user.email}

@@ -18,10 +18,10 @@ const Navbar = () => {
                 <Logo style={{ width: "70px" }} />
                 <Text>LCD Factory</Text>
             </Box>
-            <InputGroup width="3xl">
+            {/* <InputGroup width="3xl">
                 <Input type="search" placeholder="Buscar productos" backgroundColor="white"/>
                 <InputRightAddon children={<BiSearchAlt size="1.5rem"/>} />
-            </InputGroup>
+            </InputGroup> */}
             <NavbarItems itemsNavbar={itemsNavbar} />
         </NavbarContainer>
     );
