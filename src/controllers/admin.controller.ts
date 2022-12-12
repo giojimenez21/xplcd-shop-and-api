@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
-import { User } from "../models";
+import { StockByDate, User } from "../models";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -82,7 +82,7 @@ export const changeAccessToLists = async (req: Request<{},{},BodyToLists>,res: R
             return res.status(404).json({ msg: "No existe ningun usuario con ese id." });
         }
 
-        userChange.access_to_lists
+        role === "CLIENT"
             ? userChange.update({ access_to_lists: false, role: "CLIENT" })
             : userChange.update({ access_to_lists: true, role});
 
@@ -92,3 +92,22 @@ export const changeAccessToLists = async (req: Request<{},{},BodyToLists>,res: R
         return res.status(500).json({ msg: error.message });
     }
 };
+
+interface QueryReport {
+    date: string;
+}
+
+export const getStockForReport = async(req: Request<{}, {}, {}, QueryReport>, res: Response) => {
+    try {
+        const stock = await StockByDate.findOne({
+            where: { createdAt: {
+                [Op.substring]: req.query.date
+            } }
+        });
+
+        return res.status(200).json(stock);
+    } catch (error:any) {
+        console.log(error);
+        return res.status(500).json(error.message)
+    }
+}
