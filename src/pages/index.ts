@@ -8,6 +8,8 @@ export * from './admin/sales/components';
 export * from './admin/sales/helpers';
 export * from './admin/sales';
 export * from './admin/sales/styled-components';
+export * from './admin/statistics';
+export * from './admin/statistics/stock';
 export * from './admin/users/components';
 export * from './admin/users';
 export * from './admin/users/interface';
