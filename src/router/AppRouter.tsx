@@ -1,33 +1,29 @@
-
 import { FC, useContext, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
-import { Login, Register } from "../pages";
-import PublicRoute from "./PublicRoute";
-import PrivateRoute from "./PrivateRoute";
 import { AuthContext } from "../context";
-import ClientRouter from "./routesByRole/ClientRouter";
-import { checkSession } from "../helpers/checkSession";
+import { checkSession } from "../helpers";
+import { Login, Register } from "../pages";
 import { SpinnerStyled } from "../styled-components";
-import AdminRouter from "./routesByRole/AdminRouter";
+import { PrivateRoute, PublicRoute } from "./components";
+import { AdminRouter, AnyRoleRouter } from "./routesByRole";
 
 const AppRouter: FC = () => {
     const [isloading, setIsloading] = useState<boolean>(true);
     const { userState, dispatchUser } = useContext(AuthContext);
-    const { user } = userState;   
-    
+    const { user } = userState;
+
     useEffect(() => {
         checkSession()
-        .then((user) => {
-            setIsloading(false);
-            dispatchUser({ type: 'login', payload: user });
-        })
-        .catch(() => setIsloading(false));
-    }, [])
-    
+            .then((user) => {
+                setIsloading(false);
+                dispatchUser({ type: "login", payload: user });
+            })
+            .catch(() => setIsloading(false));
+    }, []);
 
     if (isloading) {
-        return <SpinnerStyled />
+        return <SpinnerStyled />;
     }
 
     return (
@@ -57,13 +53,11 @@ const AppRouter: FC = () => {
                     path="/*"
                     element={
                         <PrivateRoute user={user}>
-                            {
-                                user.role === "ADMIN"
-                                ?
+                            {user.role === "ADMIN" ? (
                                 <AdminRouter />
-                                :
-                                <ClientRouter />
-                            }
+                            ) : (
+                                <AnyRoleRouter />
+                            )}
                         </PrivateRoute>
                     }
                 />

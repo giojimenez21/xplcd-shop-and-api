@@ -2,7 +2,7 @@ import { BiSearchAlt } from "react-icons/bi";
 import { Box, Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 
 import Logo from "../ui/Logo";
-import { itemsNavbar } from "./constants/ItemsByRole";
+import { itemsNavbar } from "./constants/itemsNavbar";
 import { NavbarContainer, NavbarItems } from "./styled-components";
 
 const Navbar = () => {

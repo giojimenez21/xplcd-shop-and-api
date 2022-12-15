@@ -6,6 +6,7 @@ interface IProps {
     text: string;
     type?: "button" | "reset" | "submit" | undefined;
     styles?: ButtonProps;
+    disabled?: boolean;
     onClick?: () => void;
 }
 

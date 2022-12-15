@@ -6,7 +6,6 @@ import { ResponseProduct } from "../../../clients/interface";
 import ProductsContainer from "./styled-components/ProductsContainer.styled"
 
 const Products = () => {
-
     const { isLoading, response } = useAxios<ResponseProduct[]>([],{
         url: "/products",
         method: "GET"

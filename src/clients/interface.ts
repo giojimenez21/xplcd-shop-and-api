@@ -21,6 +21,7 @@ export interface ResponseProduct {
     list_price: number;
     type:       Type;
     color:      Color;
+    image_512: string;
 }
 
 export enum Color {
@@ -74,6 +75,8 @@ export enum Type {
 export interface ResponseProductId {
     id:         number;
     name:       string;
+    description:string;
+    image:      string;
     list_price: number;
     type:       string;
     color:      string;

@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Navigate } from "react-router-dom";
 
-import { UserSale } from "../context";
+import { User } from "../../context";
 
 interface IProps {
     children: any;
-    user: UserSale;
+    user: User;
 }
 
 const PrivateRoute: FC<IProps> = ({ children, user }) => {

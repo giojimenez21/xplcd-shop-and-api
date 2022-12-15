@@ -12,15 +12,14 @@ import {
 } from "@chakra-ui/react";
 
 import { AuthContext } from "../../../context";
-import { ItemNavbar } from "../constants/ItemsByRole";
+import { ItemNavbar } from "../constants/itemsNavbar";
 
 interface IProps {
     itemsNavbar: ItemNavbar[];
 }
 
 const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
-    const { userState, dispatchUser } = useContext(AuthContext);
-    const { user } = userState;
+    const { userState:{ user }, dispatchUser } = useContext(AuthContext);
 
     const handleLogout = () => {
         localStorage.clear();
@@ -35,7 +34,7 @@ const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
                 flexWrap="wrap"
             >
                 {itemsNavbar
-                    .filter((item) => item.role.includes(user.role))
+                    .filter((item) => item.role.includes(user.role) || item.role.includes('ALL'))
                     .map((item, i) => (
                         <Link to={`${item.path}`} key={i}>
                             <Button
@@ -61,7 +60,7 @@ const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
                 />
                 <MenuList>
                     {itemsNavbar
-                        .filter((item) => item.role.includes(user.role))
+                        .filter((item) => item.role.includes(user.role) || item.role.includes('ALL'))
                         .map((item, i) => (
                             <MenuItem key={i}>
                                 <Link to={`${item.path}`} >

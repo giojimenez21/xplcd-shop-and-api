@@ -1,26 +1,28 @@
+import  * as Yup from 'yup';
 import { useContext } from "react";
 import { Form, Formik } from "formik";
-import { Box, Text } from "@chakra-ui/react";
 import { useParams } from "react-router-dom";
-import {
-    NumberInput,
-    NumberInputField,
-    NumberInputStepper,
-    NumberIncrementStepper,
-    NumberDecrementStepper,
-} from "@chakra-ui/react";
+import { Box, Text, useToast } from "@chakra-ui/react";
 
 import { useAxios } from "../../../../hooks";
-import { ButtonCustom } from "../../../../components";
-import { SpinnerStyled } from "../../../../styled-components";
-import { ResponseProductId } from "../../../../clients/interface";
+import { ProductImage } from "../../products";
 import { ProductContext } from "../../../../context";
-import DetailCardContainer from "../styled-components/DetailCardContainer.styled";
+import { ButtonCustom } from "../../../../components";
+import {
+    NumberInputStyled,
+    SpinnerStyled,
+} from "../../../../styled-components";
+import { ResponseProductId } from "../../../../clients/interface";
+import {
+    DetailCardContainer,
+    DetailInfoCardContainer,
+} from "../styled-components";
 
 const DetailProductCard = () => {
+    const toast = useToast();
     const { id } = useParams();
     const { dispatchProduct } = useContext(ProductContext);
-    const { isLoading, response } = useAxios<ResponseProductId>(
+    const { isLoading, response: product } = useAxios<ResponseProductId>(
         {} as ResponseProductId,
         {
             url: `/products/getProductById/${id}`,
@@ -34,52 +36,48 @@ const DetailProductCard = () => {
 
     return (
         <DetailCardContainer>
-            <Text as="h1" fontWeight="bold" fontSize="3xl">
-                {response.name}
-            </Text>
-            <Text fontSize="xl">
-                Descripción:
-            </Text>
-            <Text>
-                Tipo: {response.type} <br/>
-                Color: {response.color} <br/>
-                Cantidad dispnible: {response.quantity}
-            </Text>
-            <Text as="span" fontSize="2xl">
-                Precio: ${response.list_price}
-            </Text>
-            <Text as="span" fontSize="lg">
-                Cantidad:
-            </Text>
+            <DetailInfoCardContainer>
+                <Box gridColumn="1/2">
+                    <Text as="h1" fontWeight="bold" fontSize="3xl">
+                        {product.name}
+                    </Text>
+                    <Text fontSize="xl">Descripción:</Text>
+                    <Text>
+                        Pieza: {product.description} <br />
+                        Calidad: {product.type} <br />
+                        Color: {product.color} <br />
+                    </Text>
+                    <Text as="span" fontSize="2xl">
+                        Precio: ${product.list_price}
+                    </Text>
+                </Box>
+                <ProductImage image={product.image} gridColumn="2/4" />
+            </DetailInfoCardContainer>
             <Formik
                 initialValues={{
-                    name: response.name,
-                    price: response.list_price,
-                    quantity: 1,
+                    name: product.name,
+                    price: product.list_price,
+                    quantity: 0,
                 }}
-                onSubmit={(values) =>
-                    dispatchProduct({
-                        type: "addCar",
-                        payload: { id: response.id, ...values },
-                    })
-                }
+                validationSchema={Yup.object({
+                    quantity: Yup.number().min(1, "La cantidad debe ser mayor a 0.")
+                })}
+                onSubmit={(values, { resetForm }) => {
+                    dispatchProduct({type: "addCar", payload: { id: product.id, ...values }});
+                    resetForm();
+                }}
             >
                 {(formik) => (
                     <Form noValidate>
-                        <NumberInput
-                            min={1}
-                            max={response.quantity}
-                            defaultValue={1}
-                            onChange={(value) =>
-                                (formik.values.quantity = parseInt(value))
-                            }
-                        >
-                            <NumberInputField />
-                            <NumberInputStepper>
-                                <NumberIncrementStepper />
-                                <NumberDecrementStepper />
-                            </NumberInputStepper>
-                        </NumberInput>
+                        <Text as="span" fontSize="lg">
+                            Cantidad:
+                        </Text>
+                        <NumberInputStyled
+                            name="quantity"
+                            defaultValue={0}
+                            min={0}
+                            max={product.quantity}
+                        />
                         <ButtonCustom
                             text="Agregar al carrito"
                             type="submit"
@@ -88,6 +86,7 @@ const DetailProductCard = () => {
                                 margin: "1rem auto",
                                 display: "block",
                             }}
+                            disabled={product.quantity === 0 && true}
                         />
                     </Form>
                 )}
