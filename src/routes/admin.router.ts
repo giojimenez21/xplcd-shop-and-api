@@ -1,7 +1,7 @@
 import { Router } from "express";
 
 import { validateJWT, validateRoles } from "../middlewares";
-import { changeAccessToLists, editUser, getStockForReport, getUserById, getUsers } from "../controllers/admin.controller";
+import { changeAccessToLists, editUser, getMostSelledProducts, getStockForReport, getUserById, getUsers } from "../controllers/admin.controller";
 
 export const routerAdmin = Router();
 
@@ -15,7 +15,9 @@ routerAdmin.put('/editUserById/:id', editUser);
 
 routerAdmin.put('/changeAccessListUser', changeAccessToLists);
 
-routerAdmin.get('/getStockForReport?:date', getStockForReport);
+routerAdmin.get('/getStockForReport', getStockForReport);
+
+routerAdmin.get('/getMostSelledProducts', getMostSelledProducts)
 
 
 

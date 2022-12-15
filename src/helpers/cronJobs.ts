@@ -184,8 +184,6 @@ export const getStockFinal = cron.schedule(
                     },
                 }
             );
-            console.log(stock)
-
 
         } catch (error: any) {
             console.log(error.message);

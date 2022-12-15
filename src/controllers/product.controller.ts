@@ -1,6 +1,6 @@
 import { Response, Request } from "express";
 import { odooClient } from "../clients";
-import { cleanNameProduct, generateRestrictions, orderData } from "../helpers";
+import { cleanNameProduct, generateRestrictions, getDescription, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
 import {
     ResAllProducts,
@@ -35,7 +35,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
                         ["name", "ilike", "LCD"],
                         ["name", "ilike", "TOUCH"],
                     ],
-                    ["id", "name", "list_price"],
+                    ["id", "name", "list_price", "image_512"],
                 ],
             },
         };
@@ -86,7 +86,7 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
                     "product.template",
                     "search_read",
                     [["id", "=", id]],
-                    ["id", "name", "list_price"],
+                    ["id", "name", "list_price", "image_512"],
                 ],
             },
         };
@@ -123,6 +123,8 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
         return res.status(200).json({
             ...resProducts.data.result[0],
             name: cleanNameProduct(resProducts.data.result[0].name),
+            description: getDescription(resProducts.data.result[0].name),
+            image: resProducts.data.result[0].image_512,
             type: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 1],
             color: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 2],
             list_price: resProducts.data.result[0].list_price + 50,
@@ -205,10 +207,7 @@ export const getProductByName = async (req: Request<Params>, res: Response) => {
         ];
         const [resClient, resLocations] = await Promise.all(promises);
 
-        const productsFinal = orderData(
-            resClient.data.result,
-            resLocations.data.result
-        );
+        const productsFinal = orderData(resClient.data.result,resLocations.data.result);
 
         return res.status(200).json({
             qunatity: productsFinal.length,
