@@ -9,3 +9,9 @@ export const getDescription = (name: string) => {
     if(name.includes('LCD')) return 'LCD';
     if(name.includes('TOUCH')) return 'Touch';
 }
+
+export const getTypeProduct = (name: string) => name.split(" ")[name.split(" ").length - 1];
+
+export const getColorProduct = (name: string) => name.split(" ")[name.split(" ").length - 2];
+
+export const setPriceProduct = (price: number) => price + 50;

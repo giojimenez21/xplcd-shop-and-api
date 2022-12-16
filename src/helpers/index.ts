@@ -1,4 +1,4 @@
-export * from './cleanNameProduct';
+export * from './cleanProduct';
 export * from './cronJobs';
 export * from './generateJwt';
 export * from './generateRestrictions';

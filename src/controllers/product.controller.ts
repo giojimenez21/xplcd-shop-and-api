@@ -1,14 +1,23 @@
 import { Response, Request } from "express";
+
 import { odooClient } from "../clients";
-import { cleanNameProduct, generateRestrictions, getDescription, orderData } from "../helpers";
 import { loginOdoo } from "../helpers/odoo";
+import { ProductOfSale, Sale } from "../models";
 import {
     ResAllProducts,
     ResLocations,
     ResSearchRead,
     ResWarehouse,
 } from "../interfaces/odoo.interface";
-import { ProductOfSale, Sale, User } from "../models";
+import {
+    cleanNameProduct,
+    generateRestrictions,
+    getColorProduct,
+    getDescription,
+    getTypeProduct,
+    orderData,
+    setPriceProduct,
+} from "../helpers";
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
@@ -47,9 +56,9 @@ export const getAllProducts = async (req: Request, res: Response) => {
         const phones = response.data.result.map((phone) => ({
             ...phone,
             name: cleanNameProduct(phone.name),
-            list_price: phone.list_price + 50,
-            type: phone.name.split(" ")[phone.name.split(" ").length - 1],
-            color: phone.name.split(" ")[phone.name.split(" ").length - 2],
+            list_price: setPriceProduct(phone.list_price),
+            type: getTypeProduct(phone.name),
+            color: getColorProduct(phone.name),
         }));
 
         return res.status(200).json(phones);
@@ -125,9 +134,9 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
             name: cleanNameProduct(resProducts.data.result[0].name),
             description: getDescription(resProducts.data.result[0].name),
             image: resProducts.data.result[0].image_512,
-            type: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 1],
-            color: resProducts.data.result[0].name.split(" ")[resProducts.data.result[0].name.split(" ").length - 2],
-            list_price: resProducts.data.result[0].list_price + 50,
+            type: getTypeProduct(resProducts.data.result[0].name),
+            color: getColorProduct(resProducts.data.result[0].name),
+            list_price: setPriceProduct(resProducts.data.result[0].list_price),
             quantity: resWarehouse.data.result[0] ? resWarehouse.data.result[0].quantity : 0
         });
     } catch (error) {
@@ -207,7 +216,7 @@ export const getProductByName = async (req: Request<Params>, res: Response) => {
         ];
         const [resClient, resLocations] = await Promise.all(promises);
 
-        const productsFinal = orderData(resClient.data.result,resLocations.data.result);
+        const productsFinal = orderData(resClient.data.result, resLocations.data.result);
 
         return res.status(200).json({
             qunatity: productsFinal.length,
@@ -216,26 +225,6 @@ export const getProductByName = async (req: Request<Params>, res: Response) => {
     } catch (error) {
         console.log(error);
         return res.status(400).json(error);
-    }
-};
-
-export const getAllSales = async (req: Request, res: Response) => {
-    try {
-        const sales = await Sale.findAll({
-            include: [
-                {
-                    model: ProductOfSale,
-                },
-                {
-                    model: User,
-                    attributes: ["name", "email"],
-                },
-            ],
-        });
-
-        return res.status(200).json(sales);
-    } catch (error) {
-        return res.status(500).json(error);
     }
 };
 
@@ -277,25 +266,4 @@ export const newSale = async (req: Request<{}, {}, Sale>, res: Response) => {
     }
 };
 
-interface ParamsSale {
-    id: number;
-}
 
-export const changeStatusSale = async ( req: Request<ParamsSale | any>, res: Response) => {
-    const { id } = req.params;
-    try {
-        const saleExist = await Sale.findOne({ where: { id } });
-
-        if (!saleExist)
-            return res.status(400).json({ msg: "No existe ninguna compra con ese id." });
-
-        saleExist.status === "OPEN"
-            ? await Sale.update({ status: "CLOSE" }, { where: { id } })
-            : await Sale.update({ status: "OPEN" }, { where: { id } });
-
-        return res.status(200).json({ msg: "Cambio de status exitoso." });
-
-    } catch (error) {
-        return res.status(500).json(error);
-    }
-};

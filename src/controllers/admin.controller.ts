@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
 import { Op } from "sequelize";
-import { odooClient } from "../clients";
+import { Request, Response } from "express";
+
 import { loginOdoo } from "../helpers";
+import { odooClient } from "../clients";
 import { ResPartnerLocation } from "../interfaces/odoo.interface";
-import { StockByDate, User } from "../models";
+import { ProductOfSale, Sale, StockByDate, User } from "../models";
 
 export const getUsers = async (req: Request, res: Response) => {
     try {
@@ -100,6 +101,48 @@ export const changeAccessToLists = async (req: Request<{}, {}, BodyToLists>,res:
     }
 };
 
+export const getAllSales = async (req: Request, res: Response) => {
+    try {
+        const sales = await Sale.findAll({
+            include: [
+                {
+                    model: ProductOfSale,
+                },
+                {
+                    model: User,
+                    attributes: ["name", "email"],
+                },
+            ],
+        });
+
+        return res.status(200).json(sales);
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
+
+interface ParamsSale {
+    id: number;
+}
+
+export const changeStatusSale = async ( req: Request<ParamsSale | any>, res: Response) => {
+    const { id } = req.params;
+    try {
+        const saleExist = await Sale.findOne({ where: { id } });
+
+        if (!saleExist)
+            return res.status(400).json({ msg: "No existe ninguna compra con ese id." });
+
+        saleExist.status === "OPEN"
+            ? await Sale.update({ status: "CLOSE" }, { where: { id } })
+            : await Sale.update({ status: "OPEN" }, { where: { id } });
+
+        return res.status(200).json({ msg: "Cambio de status exitoso." });
+
+    } catch (error) {
+        return res.status(500).json(error);
+    }
+};
 
 export const getStockForReport = async (req: Request,res: Response) => {
     try {

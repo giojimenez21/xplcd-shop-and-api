@@ -1,11 +1,11 @@
 import moment from "moment";
 import cron from "node-cron";
+import { Op } from "sequelize";
 
 import { loginOdoo } from "./odoo";
 import { odooClient } from "../clients";
 import { StockByDate } from "../models";
 import { ResWarehouse } from "../interfaces/odoo.interface";
-import { Op } from "sequelize";
 
 export const getStockInitial = cron.schedule(
     "00 10 * * *",
@@ -169,7 +169,7 @@ export const getStockFinal = cron.schedule(
                 }
             });
 
-            const stock = await StockByDate.update(
+            await StockByDate.update(
                 {
                     final100P,
                     final320P,

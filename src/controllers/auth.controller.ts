@@ -17,7 +17,13 @@ export const registerUser = async(req: Request<{},{},BodyRegister>, res: Respons
 
         const salt = bcrypt.genSaltSync(10);
         const hashPassword = bcrypt.hashSync(password, salt);
-        const userNew = await User.create({ name, email, password: hashPassword, role: "CLIENT", access_to_lists: false });
+        const userNew = await User.create({
+            name,
+            email,
+            password: hashPassword,
+            role: "CLIENT",
+            access_to_lists: false,
+        });
         const token = await generateJWT(userNew.id);
 
         return res.status(201).json({
@@ -58,7 +64,7 @@ export const loginUser = async(req:Request<{},{},BodyLogin>, res: Response) => {
 export const renewToken = async(req: Request, res: Response) => {
     const { id } = req;
     const token = await generateJWT(id!);
-    const user = await User.findOne({where:{id}});
+    const user = await User.findOne({ where: { id } });
 
     return res.status(200).json({
         user,
