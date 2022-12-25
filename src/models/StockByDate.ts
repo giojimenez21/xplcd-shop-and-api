@@ -47,7 +47,7 @@ export const StockByDate = db.define<StockByDateModel>(
             type: DataTypes.INTEGER
         },
         createdAt: {
-            type: DataTypes.TIME
+            type: DataTypes.DATE
         }
     },
     {

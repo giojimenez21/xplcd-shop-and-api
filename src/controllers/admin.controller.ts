@@ -2,7 +2,7 @@ import { Op, where } from "sequelize";
 import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
-import { generatePaginate, loginOdoo } from "../helpers";
+import { addPreviousAndNext, generatePaginate, loginOdoo } from "../helpers";
 import { ResPartnerLocation } from "../interfaces/odoo.interface";
 import { ProductOfSale, Sale, StockByDate, User } from "../models";
 
@@ -12,19 +12,29 @@ interface Query {
 
 export const getUsers = async (req: Request<{},{},{},Query>, res: Response) => {
     const { page = 1 } = req.query
-    const { offset, limit } = generatePaginate(page, 2);
+    const { offset, limit } = generatePaginate(page, 10);
     try {
-        const users = await User.findAll({
+        const users = await User.findAndCountAll({
             attributes: { exclude: ["password"] },
             where: {
-                id: {
-                    [Op.not]: req.id,
-                },
+                [Op.and]: [
+                    {
+                        name: {
+                            [Op.ne]: "ADMIN",
+                        },
+                    },
+                    {
+                        id: {
+                            [Op.ne]: req.id,
+                        },
+                    },
+                ],
             },
+            order: [["createdAt", "DESC"]],
             offset,
-            limit
+            limit,
         });
-        return res.status(200).json(users);
+        return res.status(200).json(addPreviousAndNext(users, offset, page));
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ msg: error.message });
@@ -167,21 +177,12 @@ export const getStockForReport = async (req: Request<{},{},{},ReportQuery>,res: 
         const stock = await StockByDate.findAll({
             order: [["createdAt", "DESC"]],
             where: {
-                [Op.or]: [
-                    {
-                        createdAt: {
-                            [Op.substring]: startDate,
-                        },
-                    },
-                    {
-                        createdAt: {
-                            [Op.substring]: endDate,
-                        },
-                    },
-                ],
+                createdAt: {
+                    [Op.between]: [startDate, endDate]
+                }
             },
         });
-
+        console.log(stock);
         return res.status(200).json(stock);
     } catch (error: any) {
         console.log(error);

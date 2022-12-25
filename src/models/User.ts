@@ -35,6 +35,7 @@ export const User = db.define<UserModel>(
         }
     },
     {
-        freezeTableName: true
+        freezeTableName: true,
+        timestamps: true
     }
 );
