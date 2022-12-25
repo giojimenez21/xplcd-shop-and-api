@@ -1,12 +1,18 @@
-import { Op } from "sequelize";
+import { Op, where } from "sequelize";
 import { Request, Response } from "express";
 
-import { loginOdoo } from "../helpers";
 import { odooClient } from "../clients";
+import { generatePaginate, loginOdoo } from "../helpers";
 import { ResPartnerLocation } from "../interfaces/odoo.interface";
 import { ProductOfSale, Sale, StockByDate, User } from "../models";
 
-export const getUsers = async (req: Request, res: Response) => {
+interface Query {
+    page: number;
+}
+
+export const getUsers = async (req: Request<{},{},{},Query>, res: Response) => {
+    const { page = 1 } = req.query
+    const { offset, limit } = generatePaginate(page, 2);
     try {
         const users = await User.findAll({
             attributes: { exclude: ["password"] },
@@ -15,6 +21,8 @@ export const getUsers = async (req: Request, res: Response) => {
                     [Op.not]: req.id,
                 },
             },
+            offset,
+            limit
         });
         return res.status(200).json(users);
     } catch (error: any) {
@@ -101,7 +109,9 @@ export const changeAccessToLists = async (req: Request<{}, {}, BodyToLists>,res:
     }
 };
 
-export const getAllSales = async (req: Request, res: Response) => {
+export const getAllSales = async (req: Request<{},{},{},Query>, res: Response) => {
+    const { page = 1 } = req.query;
+    const { offset, limit } = generatePaginate(page, 10);
     try {
         const sales = await Sale.findAll({
             include: [
@@ -113,6 +123,8 @@ export const getAllSales = async (req: Request, res: Response) => {
                     attributes: ["name", "email"],
                 },
             ],
+            offset,
+            limit
         });
 
         return res.status(200).json(sales);
@@ -144,10 +156,30 @@ export const changeStatusSale = async ( req: Request<ParamsSale | any>, res: Res
     }
 };
 
-export const getStockForReport = async (req: Request,res: Response) => {
+interface ReportQuery {
+    startDate: string;
+    endDate: string;
+}
+
+export const getStockForReport = async (req: Request<{},{},{},ReportQuery>,res: Response) => {
+    const { startDate, endDate } = req.query;
     try {
         const stock = await StockByDate.findAll({
-            order: [['createdAt', 'DESC']]
+            order: [["createdAt", "DESC"]],
+            where: {
+                [Op.or]: [
+                    {
+                        createdAt: {
+                            [Op.substring]: startDate,
+                        },
+                    },
+                    {
+                        createdAt: {
+                            [Op.substring]: endDate,
+                        },
+                    },
+                ],
+            },
         });
 
         return res.status(200).json(stock);
@@ -186,7 +218,7 @@ export const getMostSelledProducts = async (req: Request, res: Response) => {
 
         const productsMostSelled = response.data.result
             .sort((a, b) => b.quantity - a.quantity)
-            .slice(0, 9);
+            .slice(0, 10);
 
         return res.status(200).json(productsMostSelled);
 

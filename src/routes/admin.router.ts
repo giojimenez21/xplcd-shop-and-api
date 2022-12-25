@@ -16,7 +16,7 @@ export const routerAdmin = Router();
 
 routerAdmin.use(validateJWT, validateRoles("ADMIN"));
 
-routerAdmin.get("/users", getUsers);
+routerAdmin.get("/users?:page", getUsers);
 
 routerAdmin.get("/userById/:id", getUserById);
 
@@ -24,7 +24,7 @@ routerAdmin.put("/editUserById/:id", editUser);
 
 routerAdmin.put("/changeAccessListUser", changeAccessToLists);
 
-routerAdmin.get("/sales", getAllSales);
+routerAdmin.get("/sales?:page", getAllSales);
 
 routerAdmin.post("/changeStatusSale/:id", changeStatusSale);
 

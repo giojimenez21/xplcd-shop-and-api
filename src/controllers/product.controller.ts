@@ -147,15 +147,14 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
 
 export const getProductByName = async (req: Request<Params>, res: Response) => {
     const { product, rol } = req.params;
+    console.log(product, rol);
 
     try {
         const numberAuth = await loginOdoo();
         if (!numberAuth)
             return res.status(401).json({ msg: "Credenciales incorrectas." });
 
-        const { fields, restrictions } = generateRestrictions(
-            rol.toUpperCase()
-        );
+        const { fields, restrictions } = generateRestrictions(rol.toUpperCase());
 
         const bodyPetition = {
             jsonrpc: "2.0",
@@ -215,7 +214,7 @@ export const getProductByName = async (req: Request<Params>, res: Response) => {
             odooClient.get("/", { data: bodyPetition2 }),
         ];
         const [resClient, resLocations] = await Promise.all(promises);
-
+        console.log(resClient.data.result, resLocations.data.result);
         const productsFinal = orderData(resClient.data.result, resLocations.data.result);
 
         return res.status(200).json({
