@@ -1,4 +1,4 @@
-import { SalesPage, UsersPage, ListPage, EditUserPage, StatisticsPage, StockPage} from "../../../pages";
+import { SalesPage, UsersPage, ListPage, EditUserPage, StatisticsPage, StockPage, MostSelledPage} from "../../../pages";
 
 export interface ItemRoute {
     role: string[];
@@ -37,7 +37,7 @@ export const routesAdmin: ItemRoute[] = [
     {
         role: ["ADMIN"],
         path: "estadisticas/productos-mas-vendidos",
-        component: StatisticsPage
+        component: MostSelledPage
     },
     {
         role: ["ADMIN",],

@@ -12,7 +12,7 @@ import { AlertStyled, SpinnerStyled } from "../../../styled-components";
 const SalesPage = () => {
     const { productState, dispatchProduct } = useContext(ProductContext);
     const { isLoading, response: sales } = useAxios<Sale[]>([], {
-        url: "/products/sales",
+        url: "/admin/sales",
         method: "GET",
     });
 

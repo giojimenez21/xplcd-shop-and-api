@@ -38,7 +38,7 @@ const TableLists: FC<IProps> = ({ lists }) => {
                         <Tr>
                             <Th>Nombre</Th>
                             <Th>Calidad</Th>
-                            {list.products_by_lists[0].prices.map((field) => (
+                            {list.products_by_lists[0]?.prices.map((field) => (
                                 <Th key={field.list}>{field.list}</Th>
                             ))}
                         </Tr>

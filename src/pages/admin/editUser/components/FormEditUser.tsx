@@ -1,11 +1,11 @@
 import { FC } from "react";
 import { Form, Formik } from "formik";
+import { useNavigate } from "react-router-dom";
 
 import { roles } from "../constants";
 import { ButtonCustom } from "../../../../components";
 import { SelectStyled } from "../../../../styled-components";
 import { axiosClient } from "../../../../clients/axios.client";
-import { useNavigate } from "react-router-dom";
 
 interface IProps {
     valuesForm: { id: number; role: string };

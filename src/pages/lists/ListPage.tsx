@@ -11,6 +11,7 @@ const ListPage = () => {
         url: '/lists/getLists'
     });
     
+    const listsFinals = prepareLists(lists)
 
     if(isLoading) {
         return <SpinnerStyled />
@@ -18,9 +19,9 @@ const ListPage = () => {
 
     return (
         <ContainerStyled margin="1rem auto">
-            <TableLists lists={prepareLists(lists)}/>
+            <TableLists lists={listsFinals}/>
         </ContainerStyled>
     )
 }
 
-export default ListPage
+export default ListPage;

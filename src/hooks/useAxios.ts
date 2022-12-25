@@ -36,6 +36,7 @@ export const useAxios = <T>(
      * @return retorna el estado de la llamada
      */
     const request = async ( reqData = data ) => {
+        setIsLoading( true );
         if ( method === 'GET' || method === 'DELETE' ) {
             await axiosClient<T>({
                 method,
@@ -43,7 +44,7 @@ export const useAxios = <T>(
             })
             .then( data => setResponse( data.data ))
             .catch( error => console.log( error ));
-
+            setIsLoading( false );
             return response;
         }
 
@@ -54,14 +55,13 @@ export const useAxios = <T>(
         })
         .then( data => setResponse( data.data ))
         .catch( error => console.log( error ));
-
+        setIsLoading( false );
         return response;
     }
 
     useEffect(() => {
         if ( enable ) {
-            setIsLoading( true );
-            request().then( () => setIsLoading( false ));
+            request();
         }
     }, []);
 
