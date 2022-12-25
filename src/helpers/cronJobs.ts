@@ -98,7 +98,7 @@ export const getStockInitial = cron.schedule(
 );
 
 export const getStockFinal = cron.schedule(
-    "00 17 * * *",
+    "00 18 * * *",
     async () => {
         try {
             const numberAuth = await loginOdoo();
