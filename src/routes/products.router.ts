@@ -5,7 +5,7 @@ import {
     getProductByName,
     newSale,
 } from "../controllers";
-import { validateJWT, validateRoles } from "../middlewares";
+import { validateJWT } from "../middlewares";
 
 export const routerProducts = Router();
 

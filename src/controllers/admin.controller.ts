@@ -2,9 +2,9 @@ import { Op, where } from "sequelize";
 import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
-import { addPreviousAndNext, generatePaginate, loginOdoo } from "../helpers";
 import { ResPartnerLocation } from "../interfaces/odoo.interface";
 import { ProductOfSale, Sale, StockByDate, User } from "../models";
+import { addPreviousAndNext, generatePaginate, loginOdoo } from "../helpers";
 
 interface Query {
     page: number;
@@ -12,7 +12,7 @@ interface Query {
 
 export const getUsers = async (req: Request<{},{},{},Query>, res: Response) => {
     const { page = 1 } = req.query
-    const { offset, limit } = generatePaginate(page, 10);
+    const { offset, limit } = generatePaginate(page, 20);
     try {
         const users = await User.findAndCountAll({
             attributes: { exclude: ["password"] },
@@ -34,7 +34,7 @@ export const getUsers = async (req: Request<{},{},{},Query>, res: Response) => {
             offset,
             limit,
         });
-        return res.status(200).json(addPreviousAndNext(users, offset, page));
+        return res.status(200).json(addPreviousAndNext(users, limit, page));
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ msg: error.message });
@@ -180,9 +180,8 @@ export const getStockForReport = async (req: Request<{},{},{},ReportQuery>,res: 
                 createdAt: {
                     [Op.between]: [startDate, endDate]
                 }
-            },
+            }
         });
-        console.log(stock);
         return res.status(200).json(stock);
     } catch (error: any) {
         console.log(error);

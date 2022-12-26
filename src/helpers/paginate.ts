@@ -11,6 +11,6 @@ export const addPreviousAndNext = (
     page: number
 ) => ({
     previousPage: page > 1 && true,
-    nextPage: data.count / limit > page ? true : false,
+    nextPage: (data.count / limit) > page ? true : false,
     data: data.rows,
 });

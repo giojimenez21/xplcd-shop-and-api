@@ -1,10 +1,12 @@
 import { CreationOptional, DataTypes, InferAttributes, InferCreationAttributes, Model } from "sequelize";
+
 import { db } from "../database";
 import { ProductByList } from "./ProductByList";
 
 interface Compatibility extends Model<InferAttributes<Compatibility>, InferCreationAttributes<Compatibility>> {
     id: CreationOptional<number>;
     name: string;
+    notes: string;
     id_product_by_list: number;
 }
 
@@ -17,6 +19,9 @@ export const CompatibilityOfModel = db.define<Compatibility>(
             autoIncrement: true
         },
         name: {
+            type: DataTypes.STRING
+        },
+        notes: {
             type: DataTypes.TEXT
         },
         id_product_by_list: {

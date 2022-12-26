@@ -60,9 +60,7 @@ export const getListProductDetail = async(req: Request<ParamsListDetail>, res: R
     const { id } = req.params;
     try {
         const product = await ProductByList.findOne({
-            attributes: {
-                exclude: ['xp31','xp41','xp51','xp61','xp71', 'quality', 'id_brand']
-            },
+            attributes: ["id", "name"],
             include: [
                 {
                     model: Brand,
