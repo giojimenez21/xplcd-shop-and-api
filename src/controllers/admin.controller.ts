@@ -1,10 +1,10 @@
-import { Op, where } from "sequelize";
+import { Op } from "sequelize";
 import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
 import { ResPartnerLocation } from "../interfaces/odoo.interface";
 import { ProductOfSale, Sale, StockByDate, User } from "../models";
-import { addPreviousAndNext, generatePaginate, loginOdoo } from "../helpers";
+import { addPreviousAndNext, generateBodyOdoo, generatePaginate, loginOdoo } from "../helpers";
 
 interface Query {
     page: number;
@@ -194,23 +194,12 @@ export const getMostSelledProducts = async (req: Request, res: Response) => {
         const numberAuth = await loginOdoo();
         if (!numberAuth) return res.status(401).json({ msg: "Credenciales incorrectas." });
 
-        const body = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "stock.quant",
-                    "search_read",
-                    [["location_id", "=", 5]],
-                    ["id", "display_name", "quantity"],
-                ],
-            },
-        };
+        const body = generateBodyOdoo(
+            numberAuth,
+            "stock.quant",
+            [["location_id", "=", 5]],
+            ["id", "display_name", "quantity"]
+        );
 
         const response = await odooClient.get<ResPartnerLocation>("/", {
             data: body,

@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 
 import { odooClient } from "../clients";
-import { loginOdoo } from "../helpers/odoo";
+import { generateBodyOdoo, loginOdoo } from "../helpers/odoo";
 import { ProductOfSale, Sale } from "../models";
 import {
     ResAllProducts,
@@ -25,32 +25,15 @@ export const getAllProducts = async (req: Request, res: Response) => {
         if (!numberAuth)
             return res.status(401).json({ msg: "Credenciales incorrectas." });
 
-        const bodyPetition = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "product.template",
-                    "search_read",
-                    [
-                        "|",
-                        "|",
-                        ["name", "ilike", "DISP"],
-                        ["name", "ilike", "LCD"],
-                        ["name", "ilike", "TOUCH"],
-                    ],
-                    ["id", "name", "list_price", "image_512"],
-                ],
-            },
-        };
+        const body = generateBodyOdoo(
+            numberAuth,
+            "product.template",
+            [],
+            ["id", "name", "list_price", "image_512"]
+        );
 
         const response = await odooClient.get<ResAllProducts>("/", {
-            data: bodyPetition,
+            data: body,
         });
 
         const phones = response.data.result.map((phone) => ({
@@ -82,49 +65,23 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
 
         const { id } = req.params;
 
-        const bodyPetition = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "product.template",
-                    "search_read",
-                    [["id", "=", id]],
-                    ["id", "name", "list_price", "image_512"],
-                ],
-            },
-        };
+        const firstBody = generateBodyOdoo(
+            numberAuth,
+            "product.template",
+            [["id", "=", id]],
+            ["id", "name", "list_price", "image_512"]
+        );
 
-        const bodyPetition2 = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "stock.quant",
-                    "search_read",
-                    [
-                        "&",
-                        ["product_id", "=", parseInt(id)],
-                        ["location_id", "=", 8],
-                    ],
-                    ["product_id", "location_id", "quantity"],
-                ],
-            },
-        };
+        const secondBody = generateBodyOdoo(
+            numberAuth,
+            "stock.quant",
+            ["&", ["product_id", "=", +id], ["location_id", "=", 8]],
+            ["product_id", "location_id", "quantity"]
+        );
 
         const promises: Promise<ResAllProducts | ResWarehouse | any>[] = [
-            odooClient.get("/", { data: bodyPetition }),
-            odooClient.get("/", { data: bodyPetition2 }),
+            odooClient.get("/", { data: firstBody }),
+            odooClient.get("/", { data: secondBody }),
         ];
 
         const [resProducts, resWarehouse] = await Promise.all(promises);
@@ -147,7 +104,6 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
 
 export const getProductByName = async (req: Request<Params>, res: Response) => {
     const { product, rol } = req.params;
-    console.log(product, rol);
 
     try {
         const numberAuth = await loginOdoo();
@@ -156,65 +112,29 @@ export const getProductByName = async (req: Request<Params>, res: Response) => {
 
         const { fields, restrictions } = generateRestrictions(rol.toUpperCase());
 
-        const bodyPetition = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "product.template",
-                    "search_read",
-                    [
-                        "&",
-                        ["name", "ilike", product],
-                        "|",
-                        "|",
-                        ["name", "ilike", "DISP"],
-                        ["name", "ilike", "LCD"],
-                        ["name", "ilike", "TOUCH"],
-                    ],
-                    fields,
-                ],
-            },
-        };
+        const firstBody = generateBodyOdoo(
+            numberAuth,
+            "product.template",
+            [["name", "ilike", product]],
+            fields
+        );
 
-        const bodyPetition2 = {
-            jsonrpc: "2.0",
-            method: "call",
-            params: {
-                service: "object",
-                method: "execute",
-                args: [
-                    process.env.DB,
-                    numberAuth,
-                    process.env.PASSWORD,
-                    "stock.quant",
-                    "search_read",
-                    [
-                        "&",
-                        ["product_id", "ilike", product],
-                        "|",
-                        "|",
-                        ["product_id", "ilike", "DISP"],
-                        ["product_id", "ilike", "LCD"],
-                        ["product_id", "ilike", "TOUCH"],
-                        ...restrictions,
-                    ],
-                    ["product_id", "location_id", "quantity", "display_name"],
-                ],
-            },
-        };
+        const secondBody = generateBodyOdoo(
+            numberAuth,
+            "stock.quant",
+            [
+                "&",
+                ["product_id", "ilike", product],
+                ...restrictions,
+            ],
+            ["product_id", "location_id", "quantity", "display_name"]
+        );
 
         const promises: Promise<ResSearchRead | ResLocations | any>[] = [
-            odooClient.get("/", { data: bodyPetition }),
-            odooClient.get("/", { data: bodyPetition2 }),
+            odooClient.get("/", { data: firstBody }),
+            odooClient.get("/", { data: secondBody }),
         ];
         const [resClient, resLocations] = await Promise.all(promises);
-        console.log(resClient.data.result, resLocations.data.result);
         const productsFinal = orderData(resClient.data.result, resLocations.data.result);
 
         return res.status(200).json({

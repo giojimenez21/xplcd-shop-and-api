@@ -2,7 +2,7 @@ import moment from "moment";
 import cron from "node-cron";
 import { Op } from "sequelize";
 
-import { loginOdoo } from "./odoo";
+import { generateBodyOdoo, loginOdoo } from "./odoo";
 import { odooClient } from "../clients";
 import { StockByDate } from "../models";
 import { ResWarehouse } from "../interfaces/odoo.interface";
@@ -14,37 +14,26 @@ export const getStockInitial = cron.schedule(
             const numberAuth = await loginOdoo();
             if (!numberAuth) return;
 
-            const body = {
-                jsonrpc: "2.0",
-                method: "call",
-                params: {
-                    service: "object",
-                    method: "execute",
-                    args: [
-                        process.env.DB,
-                        numberAuth,
-                        process.env.PASSWORD,
-                        "stock.quant",
-                        "search_read",
-                        [
-                            "|",
-                            "|",
-                            "|",
-                            "&",
-                            "|",
-                            "|",
-                            ["product_id", "ilike", "DISP"],
-                            ["product_id", "ilike", "LCD"],
-                            ["product_id", "ilike", "TOUCH"],
-                            ["location_id", "=", 8],
-                            ["location_id", "=", 18],
-                            ["location_id", "=", 24],
-                            ["location_id", "=", 30],
-                        ],
-                        ["product_id", "location_id", "quantity"],
-                    ],
-                },
-            };
+            const body = generateBodyOdoo(
+                numberAuth,
+                "stock.quant",
+                [
+                    "|",
+                    "|",
+                    "|",
+                    "&",
+                    "|",
+                    "|",
+                    ["product_id", "ilike", "DISP"],
+                    ["product_id", "ilike", "LCD"],
+                    ["product_id", "ilike", "TOUCH"],
+                    ["location_id", "=", 8],
+                    ["location_id", "=", 18],
+                    ["location_id", "=", 24],
+                    ["location_id", "=", 30],
+                ],
+                ["product_id", "location_id", "quantity"]
+            );
 
             const response = await odooClient.get<ResWarehouse>("/", {
                 data: body,
@@ -106,37 +95,26 @@ export const getStockFinal = cron.schedule(
 
             if (!numberAuth) return;
 
-            const body = {
-                jsonrpc: "2.0",
-                method: "call",
-                params: {
-                    service: "object",
-                    method: "execute",
-                    args: [
-                        process.env.DB,
-                        numberAuth,
-                        process.env.PASSWORD,
-                        "stock.quant",
-                        "search_read",
-                        [
-                            "|",
-                            "|",
-                            "|",
-                            "&",
-                            "|",
-                            "|",
-                            ["product_id", "ilike", "DISP"],
-                            ["product_id", "ilike", "LCD"],
-                            ["product_id", "ilike", "TOUCH"],
-                            ["location_id", "=", 8],
-                            ["location_id", "=", 18],
-                            ["location_id", "=", 24],
-                            ["location_id", "=", 30],
-                        ],
-                        ["product_id", "location_id", "quantity"],
-                    ],
-                },
-            };
+            const body = generateBodyOdoo(
+                numberAuth,
+                "stock.quant",
+                [
+                    "|",
+                    "|",
+                    "|",
+                    "&",
+                    "|",
+                    "|",
+                    ["product_id", "ilike", "DISP"],
+                    ["product_id", "ilike", "LCD"],
+                    ["product_id", "ilike", "TOUCH"],
+                    ["location_id", "=", 8],
+                    ["location_id", "=", 18],
+                    ["location_id", "=", 24],
+                    ["location_id", "=", 30],
+                ],
+                ["product_id", "location_id", "quantity"]
+            );
 
             const response = await odooClient.get<ResWarehouse>("/", {
                 data: body,

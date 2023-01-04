@@ -6,8 +6,8 @@
 */
 
 interface Rol {
-    rolName: String;
-    fields: String[];
+    rolName: string;
+    fields: string[];
     locations: Number[]
 }
 
@@ -38,7 +38,7 @@ interface RolList {
 export const rolesLists:RolList[] = [
     {
         name: 'ADMIN',
-        lists: ['xp31','xp41','xp51','xp61','xp71']
+        lists: ['xp31','xp41','xp51','xp61','xp71'] // base xp3 xp4 xp5 publico
     },
     {
         name: 'MOKA',
@@ -46,30 +46,30 @@ export const rolesLists:RolList[] = [
     },
     {
         name: 'MAYORISTA1',
-        lists: ['xp41','xp71']
+        lists: ['xp41','xp71'] // xp3 publico
     }, 
     {
         name: 'MAYORISTA2',
-        lists: ['xp51','xp71']
+        lists: ['xp51','xp71'] // xp4 publico
     },
     {
         name: 'MAYORISTA3',
-        lists: ['xp61','xp71']
+        lists: ['xp61','xp71'] // XP5 Publico
     },
     {
         name: 'XP3',
-        lists: ['xp41']
+        lists: ['xp41'] //mayorista
     },
     {
         name: 'XP4',
-        lists: ['xp51']
+        lists: ['xp51'] //mayorista
     },
     {
         name: 'XP5',
-        lists: ['xp61']
+        lists: ['xp61'] //mayorista
     },
     {
         name: 'VENDEDOR',
-        lists: ['xp71']
+        lists: ['xp71'] //publico
     },
 ];

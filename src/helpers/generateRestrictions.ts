@@ -17,5 +17,4 @@ export const generateRestrictions = (rol:string) => {
         restrictions,
         fields: rolFind.fields
     }
-
 }
