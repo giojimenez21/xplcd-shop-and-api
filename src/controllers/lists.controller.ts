@@ -60,7 +60,7 @@ export const getListProductDetail = async(req: Request<ParamsListDetail>, res: R
     const { id } = req.params;
     try {
         const product = await ProductByList.findOne({
-            attributes: ["id", "name","xp31"],
+            attributes: ["id", "name"],
             include: [
                 {
                     model: Brand,

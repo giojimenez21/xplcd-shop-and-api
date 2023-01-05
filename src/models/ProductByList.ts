@@ -11,7 +11,9 @@ interface ProductByListModel extends Model<InferAttributes<ProductByListModel>, 
     xp4: number;
     xp5: number;
     public: number;
+    link_gsm: string;
     id_brand: number;
+    id_odoo: number;
 }
 
 export const ProductByList = db.define<ProductByListModel>(
@@ -43,9 +45,15 @@ export const ProductByList = db.define<ProductByListModel>(
         public: {
             type: DataTypes.NUMBER
         },
+        link_gsm: {
+            type: DataTypes.TEXT
+        },
         id_brand: {
             type: DataTypes.NUMBER
         },
+        id_odoo: {
+            type: DataTypes.INTEGER
+        }
     },
     {
         freezeTableName: true

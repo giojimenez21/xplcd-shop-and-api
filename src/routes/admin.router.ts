@@ -2,8 +2,13 @@ import { Router } from "express";
 import {
     changeAccessToLists,
     changeStatusSale,
+    createBrand,
+    createProduct,
+    editBrand,
+    editProduct,
     editUser,
     getAllSales,
+    getBrands,
     getMostSelledProducts,
     getStockForReport,
     getStockProductsOfDate,
@@ -35,3 +40,12 @@ routerAdmin.get("/getMostSelledProducts", connectToOdoo, getMostSelledProducts);
 
 routerAdmin.get("/getStockProductsOfDate", connectToOdoo, getStockProductsOfDate);
 
+routerAdmin.get("/getBrands", getBrands);
+
+routerAdmin.post("/createBrand", createBrand);
+
+routerAdmin.put("/editBrand/:id", editBrand);
+
+routerAdmin.post("/createProduct", createProduct);
+
+routerAdmin.put("/editProduct/:id", editProduct);

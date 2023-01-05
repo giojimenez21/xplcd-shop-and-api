@@ -3,8 +3,8 @@ import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
 import { ProductStockDate, ResPartnerLocation } from "../interfaces/odoo.interface";
-import { ProductOfSale, Sale, StockByDate, User } from "../models";
-import { addPreviousAndNext, generateBodyOdoo, generatePaginate, loginOdoo } from "../helpers";
+import { addPreviousAndNext, generateBodyOdoo, generatePaginate } from "../helpers";
+import { Brand, ProductByList, ProductOfSale, Sale, StockByDate, User } from "../models";
 
 interface Query {
     page: number;
@@ -257,3 +257,76 @@ export const getStockProductsOfDate = async(req: Request, res: Response) => {
         return res.status(500).json(error.message);
     }
 }
+
+export const getBrands = async (req: Request, res: Response) => {
+    try {
+
+        const brands = await Brand.findAll();
+        return res.status(200).json(brands);
+
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+};
+
+interface BrandBody {
+    name: string;
+    color: string;
+}
+
+export const createBrand = async( req: Request<{},{},BrandBody>, res: Response ) => {
+    const { name, color } = req.body;
+    try {
+        await Brand.create({ name, color });
+        
+        return res.status(200).json({ msg: "La marca fue creada con exito" });
+
+    } catch (error:any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+}
+
+interface ParamsId {
+    id: number;
+}
+
+export const editBrand = async (req: Request<ParamsId>, res: Response) => {
+    const { id } = req.params;
+    const { name, color } = req.body;
+    try {
+
+        await Brand.update({ name, color }, { where: { id } });
+        return res.status(200).json({ msg: "La marca fue editada con exito" });
+
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+};
+
+export const createProduct = async (req: Request, res: Response) => {
+    try {
+
+        await ProductByList.create({ ...req.body });
+        return res.status(200).json({ msg: "El producto fue creado con exito." });
+
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+};
+
+export const editProduct = async (req: Request<ParamsId>, res: Response) => {
+    const { id } = req.params;
+    try {
+
+        await ProductByList.update({ ...req.body }, { where: { id } });
+        return res.status(200).json({ msg: "El producto fue editado con exito." });
+
+    } catch (error: any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+};
