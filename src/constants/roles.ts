@@ -38,38 +38,38 @@ interface RolList {
 export const rolesLists:RolList[] = [
     {
         name: 'ADMIN',
-        lists: ['xp31','xp41','xp51','xp61','xp71'] // base xp3 xp4 xp5 publico
+        lists: ['base','xp3','xp4','xp5','public'] // base xp3 xp4 xp5 publico
     },
     {
         name: 'MOKA',
-        lists: ['xp31','xp41','xp51','xp61','xp71']
+        lists: ['base','xp3','xp4','xp5','public']
     },
     {
         name: 'MAYORISTA1',
-        lists: ['xp41','xp71'] // xp3 publico
+        lists: ['xp3','public'] // xp3 publico
     }, 
     {
         name: 'MAYORISTA2',
-        lists: ['xp51','xp71'] // xp4 publico
+        lists: ['xp4','public'] // xp4 publico
     },
     {
         name: 'MAYORISTA3',
-        lists: ['xp61','xp71'] // XP5 Publico
+        lists: ['xp5','public'] // XP5 Publico
     },
     {
         name: 'XP3',
-        lists: ['xp41'] //mayorista
+        lists: ['xp3'] //mayorista
     },
     {
         name: 'XP4',
-        lists: ['xp51'] //mayorista
+        lists: ['xp4'] //mayorista
     },
     {
         name: 'XP5',
-        lists: ['xp61'] //mayorista
+        lists: ['xp5'] //mayorista
     },
     {
         name: 'VENDEDOR',
-        lists: ['xp71'] //publico
+        lists: ['public'] //publico
     },
 ];

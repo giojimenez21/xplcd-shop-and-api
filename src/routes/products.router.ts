@@ -5,14 +5,14 @@ import {
     getProductByName,
     newSale,
 } from "../controllers";
-import { validateJWT } from "../middlewares";
+import { connectToOdoo, validateJWT } from "../middlewares";
 
 export const routerProducts = Router();
 
-routerProducts.get("/", getAllProducts);
+routerProducts.get("/", connectToOdoo ,getAllProducts);
 
-routerProducts.get("/getProducts/:rol/:product", getProductByName);
+routerProducts.get("/getProducts/:rol/:product", connectToOdoo, getProductByName);
 
-routerProducts.get("/getProductById/:id", getProductById);
+routerProducts.get("/getProductById/:id", connectToOdoo, getProductById);
 
 routerProducts.post("/newSale", validateJWT, newSale);

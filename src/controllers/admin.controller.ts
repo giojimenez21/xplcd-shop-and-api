@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
-import { ResPartnerLocation } from "../interfaces/odoo.interface";
+import { ProductStockDate, ResPartnerLocation } from "../interfaces/odoo.interface";
 import { ProductOfSale, Sale, StockByDate, User } from "../models";
 import { addPreviousAndNext, generateBodyOdoo, generatePaginate, loginOdoo } from "../helpers";
 
@@ -191,11 +191,8 @@ export const getStockForReport = async (req: Request<{},{},{},ReportQuery>,res: 
 
 export const getMostSelledProducts = async (req: Request, res: Response) => {
     try {
-        const numberAuth = await loginOdoo();
-        if (!numberAuth) return res.status(401).json({ msg: "Credenciales incorrectas." });
-
         const body = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "stock.quant",
             [["location_id", "=", 5]],
             ["id", "display_name", "quantity"]
@@ -216,3 +213,47 @@ export const getMostSelledProducts = async (req: Request, res: Response) => {
         return res.status(500).json(error.message);
     }
 };
+
+interface Product {
+    id: number;
+    name: string;
+    quantity: number;
+}
+
+export const getStockProductsOfDate = async(req: Request, res: Response) => {
+    try {
+        const products:Product[] = [];
+        const { date } = req.query;
+        
+        const body = generateBodyOdoo(
+            req.id_odoo!,
+            "sale.order.line",
+            [["create_date", "like", `%${date}%`]],
+            [
+                "name",
+                "product_uom_qty",
+                "create_date"
+            ]
+        );
+
+        const response = await odooClient.get<ProductStockDate>('/', { data: body });
+        response.data.result.forEach(product => {
+            const productFound = products.find( p => p.name === product.name);
+            if( productFound ) {
+                productFound.quantity += product.product_uom_qty;
+                return;
+            }
+
+            products.push({
+                id: product.id,
+                name: product.name,
+                quantity: product.product_uom_qty
+            });
+        })
+
+        return res.status(200).json(products);
+    } catch (error:any) {
+        console.log(error);
+        return res.status(500).json(error.message);
+    }
+}

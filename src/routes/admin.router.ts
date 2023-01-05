@@ -6,11 +6,12 @@ import {
     getAllSales,
     getMostSelledProducts,
     getStockForReport,
+    getStockProductsOfDate,
     getUserById,
     getUsers,
 } from "../controllers";
 
-import { validateJWT, validateRoles } from "../middlewares";
+import { validateJWT, validateRoles, connectToOdoo } from "../middlewares";
 
 export const routerAdmin = Router();
 
@@ -30,4 +31,7 @@ routerAdmin.post("/changeStatusSale/:id", changeStatusSale);
 
 routerAdmin.get("/getStockForReport", getStockForReport);
 
-routerAdmin.get("/getMostSelledProducts", getMostSelledProducts);
+routerAdmin.get("/getMostSelledProducts", connectToOdoo, getMostSelledProducts);
+
+routerAdmin.get("/getStockProductsOfDate", connectToOdoo, getStockProductsOfDate);
+

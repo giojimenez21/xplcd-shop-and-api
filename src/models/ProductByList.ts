@@ -6,11 +6,11 @@ interface ProductByListModel extends Model<InferAttributes<ProductByListModel>, 
     id: CreationOptional<number>;
     name: string;
     quality: string;
-    xp31: number;
-    xp41: number;
-    xp51: number;
-    xp61: number;
-    xp71: number;
+    base: number;
+    xp3: number;
+    xp4: number;
+    xp5: number;
+    public: number;
     id_brand: number;
 }
 
@@ -28,19 +28,19 @@ export const ProductByList = db.define<ProductByListModel>(
         quality: {
             type: DataTypes.STRING
         },
-        xp31: {
+        base: {
             type: DataTypes.NUMBER
         },
-        xp41: {
+        xp3: {
             type: DataTypes.NUMBER
         },
-        xp51: {
+        xp4: {
             type: DataTypes.NUMBER
         },
-        xp61: {
+        xp5: {
             type: DataTypes.NUMBER
         },
-        xp71: {
+        public: {
             type: DataTypes.NUMBER
         },
         id_brand: {

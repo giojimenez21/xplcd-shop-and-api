@@ -1,7 +1,7 @@
 import { Response, Request } from "express";
 
 import { odooClient } from "../clients";
-import { generateBodyOdoo, loginOdoo } from "../helpers/odoo";
+import { generateBodyOdoo } from "../helpers/odoo";
 import { ProductOfSale, Sale } from "../models";
 import {
     ResAllProducts,
@@ -21,12 +21,8 @@ import {
 
 export const getAllProducts = async (req: Request, res: Response) => {
     try {
-        const numberAuth = await loginOdoo();
-        if (!numberAuth)
-            return res.status(401).json({ msg: "Credenciales incorrectas." });
-
         const body = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "product.template",
             [],
             ["id", "name", "list_price", "image_512"]
@@ -57,23 +53,19 @@ interface Params {
     id: string;
 }
 
-export const getProductById = async (req: Request<Params>, res: Response) => {
+export const getProductById = async (req: Request, res: Response) => {
     try {
-        const numberAuth = await loginOdoo();
-        if (!numberAuth)
-            return res.status(401).json({ msg: "Credenciales incorrectas." });
-
         const { id } = req.params;
 
         const firstBody = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "product.template",
             [["id", "=", id]],
             ["id", "name", "list_price", "image_512"]
         );
 
         const secondBody = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "stock.quant",
             ["&", ["product_id", "=", +id], ["location_id", "=", 8]],
             ["product_id", "location_id", "quantity"]
@@ -102,25 +94,21 @@ export const getProductById = async (req: Request<Params>, res: Response) => {
     }
 };
 
-export const getProductByName = async (req: Request<Params>, res: Response) => {
+export const getProductByName = async (req: Request, res: Response) => {
     const { product, rol } = req.params;
 
     try {
-        const numberAuth = await loginOdoo();
-        if (!numberAuth)
-            return res.status(401).json({ msg: "Credenciales incorrectas." });
-
         const { fields, restrictions } = generateRestrictions(rol.toUpperCase());
 
         const firstBody = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "product.template",
             [["name", "ilike", product]],
             fields
         );
 
         const secondBody = generateBodyOdoo(
-            numberAuth,
+            req.id_odoo!,
             "stock.quant",
             [
                 "&",
