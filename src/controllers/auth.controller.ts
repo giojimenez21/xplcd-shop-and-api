@@ -32,7 +32,7 @@ export const registerUser = async(req: Request<{},{},BodyRegister>, res: Respons
         });
 
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 }
 
@@ -57,7 +57,7 @@ export const loginUser = async(req:Request<{},{},BodyLogin>, res: Response) => {
         });
 
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 }
 

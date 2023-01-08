@@ -37,7 +37,7 @@ export const getUsers = async (req: Request<{},{},{},Query>, res: Response) => {
         return res.status(200).json(addPreviousAndNext(users, limit, page));
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -61,7 +61,7 @@ export const getUserById = async (req: Request<ParamsUserId>,res: Response) => {
         return res.status(200).json(user);
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -88,7 +88,7 @@ export const editUser = async (req: Request<ParamsUserId, {}, BodyEdit>,res: Res
         return res.status(200).json({ msg: "Usuario editado con exito." });
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -115,7 +115,7 @@ export const changeAccessToLists = async (req: Request<{}, {}, BodyToLists>,res:
         return res.status(200).json({ msg: "Estado del usuario actualizado" });
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({ msg: error.message });
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -139,7 +139,7 @@ export const getAllSales = async (req: Request<{},{},{},Query>, res: Response) =
 
         return res.status(200).json(sales);
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -162,7 +162,7 @@ export const changeStatusSale = async ( req: Request<ParamsSale | any>, res: Res
         return res.status(200).json({ msg: "Cambio de status exitoso." });
 
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 

@@ -17,7 +17,7 @@ export const getLists = async(req: Request, res: Response) => {
         return res.status(200).json(lists);
     } catch (error:any) {
         console.log(error);
-        return res.status(500).json({msg: error.message});
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 }
 
@@ -48,7 +48,7 @@ export const getListByProductName = async(req: Request<ParamsList>, res: Respons
         return res.status(200).json(products);
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({msg: error.message});
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 }
 
@@ -80,6 +80,6 @@ export const getListProductDetail = async(req: Request<ParamsListDetail>, res: R
         return res.status(200).json(product);
     } catch (error: any) {
         console.log(error);
-        return res.status(500).json({msg: error.message});
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 }

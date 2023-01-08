@@ -43,7 +43,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
         return res.status(200).json(phones);
     } catch (error) {
         console.log(error);
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -90,7 +90,7 @@ export const getProductById = async (req: Request, res: Response) => {
         });
     } catch (error) {
         console.log(error)
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
@@ -129,9 +129,9 @@ export const getProductByName = async (req: Request, res: Response) => {
             qunatity: productsFinal.length,
             phones: productsFinal,
         });
-    } catch (error) {
+    } catch (error:any) {
         console.log(error);
-        return res.status(400).json(error);
+        return res.status(400).json({ msg: error.message });
     }
 };
 
@@ -169,7 +169,7 @@ export const newSale = async (req: Request<{}, {}, Sale>, res: Response) => {
             msg: "Su compra  fue realizada, espere que se contacten con usted via correo electrónico.",
         });
     } catch (error) {
-        return res.status(500).json(error);
+        return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });
     }
 };
 
