@@ -178,7 +178,7 @@ export const getStockForReport = async (req: Request<{},{},{},ReportQuery>,res: 
             order: [["createdAt", "DESC"]],
             where: {
                 createdAt: {
-                    [Op.between]: [startDate, endDate]
+                    [Op.between]: [startDate, `${endDate} 23:59:00`]
                 }
             }
         });
