@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
 import { ProductStockDate, ResPartnerLocation } from "../interfaces/odoo.interface";
-import { addPreviousAndNext, generateBodyOdoo, generatePaginate } from "../helpers";
+import { addPreviousAndNext, generateBodyOdoo, generateConditionsOfDates, generatePaginate } from "../helpers";
 import { Brand, ProductByList, ProductOfSale, Sale, StockByDate, User } from "../models";
 
 interface Query {
@@ -223,17 +223,15 @@ interface Product {
 export const getStockProductsOfDate = async(req: Request, res: Response) => {
     try {
         const products:Product[] = [];
-        const { date } = req.query;
-        
+        const { startDate, endDate } = req.query;
+
+        const conditions = generateConditionsOfDates(startDate, endDate);
+
         const body = generateBodyOdoo(
             req.id_odoo!,
             "sale.order.line",
-            [["create_date", "like", `%${date}%`]],
-            [
-                "name",
-                "product_uom_qty",
-                "create_date"
-            ]
+            [ ...conditions ],
+            ["name", "product_uom_qty", "create_date"]
         );
 
         const response = await odooClient.get<ProductStockDate>('/', { data: body });

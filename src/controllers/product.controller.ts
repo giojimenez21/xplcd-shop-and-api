@@ -47,12 +47,6 @@ export const getAllProducts = async (req: Request, res: Response) => {
     }
 };
 
-interface Params {
-    product: string;
-    rol: string;
-    id: string;
-}
-
 export const getProductById = async (req: Request, res: Response) => {
     try {
         const { id } = req.params;
