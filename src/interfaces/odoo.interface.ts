@@ -260,15 +260,23 @@ export interface ResultPartnerLocation {
 export interface ProductStockDate {
     jsonrpc: string;
     id:      null;
-    result:  ResultProduct[];
+    result:  ResultStockDate[];
 }
 
-export interface ResultProduct {
+export interface ResultStockDate {
     id:              number;
     name:            string;
     product_uom_qty: number;
     create_date:     string;
+    warehouse_id:    Array<WarehouseIDEnum | number>;
+    product_id:      Array<number | string>;
 }
+
+export enum WarehouseIDEnum {
+    Bodega = "BODEGA",
+}
+
+
 
 
 

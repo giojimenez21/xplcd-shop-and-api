@@ -2,7 +2,7 @@ import { Op } from "sequelize";
 import { Request, Response } from "express";
 
 import { odooClient } from "../clients";
-import { ProductStockDate, ResPartnerLocation } from "../interfaces/odoo.interface";
+import { ProductStockDate, ResPartnerLocation, ResultStockDate } from "../interfaces/odoo.interface";
 import { addPreviousAndNext, generateBodyOdoo, generateConditionsOfDates, generatePaginate } from "../helpers";
 import { Brand, ProductByList, ProductOfSale, Sale, StockByDate, User } from "../models";
 
@@ -214,15 +214,11 @@ export const getMostSelledProducts = async (req: Request, res: Response) => {
     }
 };
 
-interface Product {
-    id: number;
-    name: string;
-    quantity: number;
-}
+
 
 export const getStockProductsOfDate = async(req: Request, res: Response) => {
     try {
-        const products:Product[] = [];
+        const products:ResultStockDate[] = [];
         const { startDate, endDate } = req.query;
 
         const conditions = generateConditionsOfDates(startDate, endDate);
@@ -230,23 +226,25 @@ export const getStockProductsOfDate = async(req: Request, res: Response) => {
         const body = generateBodyOdoo(
             req.id_odoo!,
             "sale.order.line",
-            [ ...conditions ],
-            ["name", "product_uom_qty", "create_date"]
+            [...conditions, ["warehouse_id", "like", 1]],
+            [
+                "name",
+                "product_uom_qty",
+                "create_date",
+                "warehouse_id",
+                "product_id",
+            ]
         );
 
         const response = await odooClient.get<ProductStockDate>('/', { data: body });
         response.data.result.forEach(product => {
-            const productFound = products.find( p => p.name === product.name);
+            const productFound = products.find( p => p.product_id[0] === product.product_id[0]);
             if( productFound ) {
-                productFound.quantity += product.product_uom_qty;
+                productFound.product_uom_qty += product.product_uom_qty;
                 return;
             }
 
-            products.push({
-                id: product.id,
-                name: product.name,
-                quantity: product.product_uom_qty
-            });
+            products.push( product );
         })
 
         return res.status(200).json(products);

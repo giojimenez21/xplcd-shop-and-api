@@ -8,7 +8,7 @@ import { StockByDate } from "../models";
 import { ResWarehouse } from "../interfaces/odoo.interface";
 
 export const getStockInitial = cron.schedule(
-    "00 10 * * *",
+    "00 09 * * *",
     async () => {
         try {
             const numberAuth = await loginOdoo();
@@ -21,12 +21,6 @@ export const getStockInitial = cron.schedule(
                     "|",
                     "|",
                     "|",
-                    "&",
-                    "|",
-                    "|",
-                    ["product_id", "ilike", "DISP"],
-                    ["product_id", "ilike", "LCD"],
-                    ["product_id", "ilike", "TOUCH"],
                     ["location_id", "=", 8],
                     ["location_id", "=", 18],
                     ["location_id", "=", 24],
@@ -87,7 +81,7 @@ export const getStockInitial = cron.schedule(
 );
 
 export const getStockFinal = cron.schedule(
-    "00 18 * * *",
+    "00 19 * * *",
     async () => {
         try {
             const numberAuth = await loginOdoo();
@@ -102,12 +96,6 @@ export const getStockFinal = cron.schedule(
                     "|",
                     "|",
                     "|",
-                    "&",
-                    "|",
-                    "|",
-                    ["product_id", "ilike", "DISP"],
-                    ["product_id", "ilike", "LCD"],
-                    ["product_id", "ilike", "TOUCH"],
                     ["location_id", "=", 8],
                     ["location_id", "=", 18],
                     ["location_id", "=", 24],
@@ -162,7 +150,6 @@ export const getStockFinal = cron.schedule(
                     },
                 }
             );
-
         } catch (error: any) {
             console.log(error.message);
         }
