@@ -10,6 +10,8 @@ import { ResWarehouse } from "../interfaces/odoo.interface";
 export const getStockInitial = cron.schedule(
     "00 09 * * *",
     async () => {
+        console.log('primero');
+        
         try {
             const numberAuth = await loginOdoo();
             if (!numberAuth) return;
@@ -83,6 +85,7 @@ export const getStockInitial = cron.schedule(
 export const getStockFinal = cron.schedule(
     "00 19 * * *",
     async () => {
+        console.log('segundo')
         try {
             const numberAuth = await loginOdoo();
             const dateNow = moment().format("YYYY-MM-DD").toString();
