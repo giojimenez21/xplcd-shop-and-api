@@ -7,6 +7,7 @@ import { routerAdmin, routerAuth, routerLists, routerProducts } from './routes';
 dotenv.config();
 
 const PORT = process.env.PORT || 4000;
+process.env.TZ = "America/Mexico_City";
 const app = express();
 
 app.use(cors());
