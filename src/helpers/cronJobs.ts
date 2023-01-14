@@ -83,7 +83,7 @@ export const getStockInitial = cron.schedule(
 );
 
 export const getStockFinal = cron.schedule(
-    "00 10 * * *",
+    "00 19 * * *",
     async () => {
         console.log('segundo')
         try {
