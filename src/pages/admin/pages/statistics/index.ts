@@ -1,0 +1,10 @@
+export { default as StatisticsPage } from './StatisticsPage';
+export * from './components';
+export * from './constants';
+export * from './pages';
+export * from './pages/mostSelled';
+export * from './pages/mostSelled/interface';
+export * from './pages/salesOfProduct';
+export * from './pages/stock/components';
+export * from './pages/stock';
+export * from './pages/stock/interface';

@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-
 import { useAxios } from "../../hooks"
 import { prepareLists } from "./helpers";
 import { TableLists } from "./components";
@@ -18,7 +16,7 @@ const ListPage = () => {
     }
 
     return (
-        <ContainerStyled margin="1rem auto">
+        <ContainerStyled margin="1rem auto" padding="0 1rem">
             <TableLists lists={listsFinals}/>
         </ContainerStyled>
     )

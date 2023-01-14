@@ -1,8 +1,9 @@
+import { FC } from "react";
+import * as Yup from "yup";
 import { Form, Formik } from "formik";
 import { Box } from "@chakra-ui/react";
-import { InputStyled } from "../../styled-components";
-import { FC } from "react";
-import { ButtonCustom } from "..";
+
+import { ButtonCustom, InputCustom } from "..";
 
 interface Dates {
     startDate: string;
@@ -15,9 +16,8 @@ interface IProps {
     propsDate: Dates;
 }
 
-const DatePicker: FC<IProps> = ({
-    propsDate: { startDate, endDate, setStartDate, setEndDate },
-}) => {
+const DatePicker: FC<IProps> = ({ propsDate: { startDate, endDate, setStartDate, setEndDate } }) => {
+    
     return (
         <Formik
             initialValues={{ startDate, endDate }}
@@ -35,14 +35,14 @@ const DatePicker: FC<IProps> = ({
                         alignItems="center"
                     >
                         <Box gridColumn={["span 12", "span 4", "span 2"]}>
-                            <InputStyled
+                            <InputCustom
                                 type="date"
                                 placeholder="Fecha inicial"
                                 name="startDate"
                             />
                         </Box>
                         <Box gridColumn={["span 12", "span 4", "span 2"]}>
-                            <InputStyled
+                            <InputCustom
                                 type="date"
                                 placeholder="Fecha final"
                                 name="endDate"

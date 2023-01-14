@@ -1,1 +1,1 @@
-export { default as AuthContainer } from './AuthContainer.styled';
+export { default as LoginContainer } from './LoginContainer.styled';

@@ -1,12 +1,12 @@
-import { AuthContainer, RegisterForm } from ".."
-
+import { LoginContainer } from "../login"
+import { RegisterForm } from "./components"
 
 const Register = () => {
     return (
-        <AuthContainer>
+        <LoginContainer>
             <RegisterForm />
-        </AuthContainer>
+        </LoginContainer>
     )
 }
 
-export default Register
+export default Register;

@@ -7,16 +7,10 @@ import { Box, Text, useToast } from "@chakra-ui/react";
 import { useAxios } from "../../../../hooks";
 import { ProductImage } from "../../products";
 import { ProductContext } from "../../../../context";
-import { ButtonCustom } from "../../../../components";
-import {
-    NumberInputStyled,
-    SpinnerStyled,
-} from "../../../../styled-components";
+import { SpinnerStyled } from "../../../../styled-components";
 import { ResponseProductId } from "../../../../clients/interface";
-import {
-    DetailCardContainer,
-    DetailInfoCardContainer,
-} from "../styled-components";
+import { ButtonCustom, NumberInputCustom } from "../../../../components";
+import { DetailCardContainer, DetailInfoCardContainer } from "../styled-components";
 
 const DetailProductCard = () => {
     const toast = useToast();
@@ -72,7 +66,7 @@ const DetailProductCard = () => {
                         <Text as="span" fontSize="lg">
                             Cantidad:
                         </Text>
-                        <NumberInputStyled
+                        <NumberInputCustom
                             name="quantity"
                             defaultValue={0}
                             min={0}
@@ -86,7 +80,6 @@ const DetailProductCard = () => {
                                 margin: "1rem auto",
                                 display: "block",
                             }}
-                            disabled={product.quantity === 0 && true}
                         />
                     </Form>
                 )}

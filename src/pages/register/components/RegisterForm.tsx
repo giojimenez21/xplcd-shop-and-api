@@ -1,13 +1,12 @@
 import * as Yup from "yup";
-import { FC, useContext } from "react";
 import { Formik, Form } from "formik";
+import { FC, useContext } from "react";
 import { Box, Text } from "@chakra-ui/react";
 
-import { ButtonCustom, Logo } from "../../../components";
-import { InputStyled } from "../../../styled-components";
+import { AuthContext } from "../../../context";
 import { axiosClient } from "../../../clients/axios.client";
 import { ResponseLogin } from "../../../clients/interface";
-import { AuthContext } from "../../../context";
+import { ButtonCustom, InputCustom, Logo } from "../../../components";
 
 const RegisterForm: FC = () => {
     const { dispatchUser } = useContext(AuthContext);
@@ -40,9 +39,9 @@ const RegisterForm: FC = () => {
             >
                 {(formik) => (
                     <Form noValidate>
-                        <InputStyled placeholder="Nombre completo" name="name" />
-                        <InputStyled placeholder="Correo electrónico" name="email" />
-                        <InputStyled
+                        <InputCustom placeholder="Nombre completo" name="name" />
+                        <InputCustom placeholder="Correo electrónico" name="email" />
+                        <InputCustom
                             placeholder="Contraseña"
                             name="password"
                             type="password"

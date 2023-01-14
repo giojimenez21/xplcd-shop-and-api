@@ -1,13 +1,6 @@
-import {
-    Table,
-    TableContainer,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from "@chakra-ui/react";
-import { FC } from "react";
+import { FC, useId } from "react";
+import { Table, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+
 import { List } from "../interface";
 
 interface IProps {
@@ -39,7 +32,7 @@ const TableLists: FC<IProps> = ({ lists }) => {
                             <Th>Nombre</Th>
                             <Th>Calidad</Th>
                             {list.products_by_lists[0]?.prices.map((field) => (
-                                <Th key={field.list}>{field.list}</Th>
+                                <Th key={ useId() }>{field.list}</Th>
                             ))}
                         </Tr>
                     </Thead>
@@ -49,12 +42,7 @@ const TableLists: FC<IProps> = ({ lists }) => {
                                 <Td>{product.name}</Td>
                                 <Td>{product.quality}</Td>
                                 {product.prices.map((fieldProduct) => (
-                                    <Td
-                                        key={
-                                            fieldProduct.list +
-                                            fieldProduct.price
-                                        }
-                                    >
+                                    <Td key={ useId() }>
                                         {fieldProduct.price}
                                     </Td>
                                 ))}

@@ -5,10 +5,9 @@ import { Link } from "react-router-dom";
 import { Box, Text } from "@chakra-ui/react";
 
 import { AuthContext } from "../../../context";
-import { ButtonCustom, Logo } from "../../../components";
-import { InputStyled } from "../../../styled-components";
-import { axiosClient } from "../../../clients/axios.client";
 import { ResponseLogin } from "../../../clients/interface";
+import { axiosClient } from "../../../clients/axios.client";
+import { ButtonCustom, InputCustom, Logo } from "../../../components";
 
 const LoginForm: FC = () => {
     const { dispatchUser } = useContext(AuthContext);
@@ -40,8 +39,8 @@ const LoginForm: FC = () => {
             >
                 {(formik) => (
                     <Form noValidate>
-                        <InputStyled placeholder="Correo electrónico" name="email" />
-                        <InputStyled
+                        <InputCustom placeholder="Correo electrónico" name="email" />
+                        <InputCustom
                             placeholder="Contraseña"
                             name="password"
                             type="password"
