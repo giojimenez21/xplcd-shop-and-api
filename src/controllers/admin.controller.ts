@@ -204,7 +204,7 @@ export const getMostSelledProducts = async (req: Request, res: Response) => {
 
         const productsMostSelled = response.data.result
             .sort((a, b) => b.quantity - a.quantity)
-            .slice(0, 10);
+            .slice(0, 20);
 
         return res.status(200).json(productsMostSelled);
 
@@ -245,9 +245,11 @@ export const getStockProductsOfDate = async(req: Request, res: Response) => {
             }
 
             products.push( product );
-        })
+        });
 
-        return res.status(200).json(products);
+        const productsOrderAlphabetic = products.sort((a,b) => a.name.localeCompare(b.name));
+
+        return res.status(200).json(productsOrderAlphabetic);
     } catch (error:any) {
         console.log(error);
         return res.status(500).json(error.message);
