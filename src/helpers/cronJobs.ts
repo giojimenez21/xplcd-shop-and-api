@@ -82,6 +82,59 @@ export const getStockInitial = cron.schedule(
     }
 );
 
+export const updateStockWH = cron.schedule(
+    "45 17 * * *",
+    async () => {
+        try {
+            const numberAuth = await loginOdoo();
+            const dateNow = moment().format("YYYY-MM-DD").toString();
+
+            if (!numberAuth) return;
+
+            const body = generateBodyOdoo(
+                numberAuth,
+                "stock.quant",
+                [
+                    "|",
+                    "|",
+                    "|",
+                    ["location_id", "=", 8],
+                ],
+                ["product_id", "location_id", "quantity"]
+            );
+
+            const response = await odooClient.get<ResWarehouse>("/", {
+                data: body,
+            });
+
+            let finalWh = 0;
+
+            response.data.result.forEach((product) => {
+                finalWh += product.quantity;
+            });
+
+            await StockByDate.update(
+                {
+                    finalWh,
+                },
+                {
+                    where: {
+                        createdAt: {
+                            [Op.substring]: dateNow,
+                        },
+                    },
+                }
+            );
+        } catch (error: any) {
+            console.log(error.message);
+        }
+    },
+    {
+        scheduled: false,
+        timezone: "America/Mexico_City",
+    }
+);
+
 export const getStockFinal = cron.schedule(
     "00 19 * * *",
     async () => {

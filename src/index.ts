@@ -2,7 +2,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import express from 'express';
 import { db } from './database';
-import { createAdmin, getStockFinal, getStockInitial } from './helpers';
+import { createAdmin, getStockFinal, getStockInitial, updateStockWH } from './helpers';
 import { routerAdmin, routerAuth, routerLists, routerProducts } from './routes';
 dotenv.config();
 
@@ -23,6 +23,8 @@ app.use('/lists', routerLists);
 app.use('/products', routerProducts);
 
 getStockInitial.start();
+
+updateStockWH.start();
 
 getStockFinal.start();
 
