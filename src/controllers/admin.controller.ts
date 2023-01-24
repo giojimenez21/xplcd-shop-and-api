@@ -226,7 +226,7 @@ export const getStockProductsOfDate = async(req: Request, res: Response) => {
         const body = generateBodyOdoo(
             req.id_odoo!,
             "sale.order.line",
-            [...conditions, ["warehouse_id", "like", 1]],
+            [...conditions ],
             [
                 "name",
                 "product_uom_qty",

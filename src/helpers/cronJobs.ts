@@ -10,8 +10,8 @@ import { ResWarehouse } from "../interfaces/odoo.interface";
 export const getStockInitial = cron.schedule(
     "00 09 * * *",
     async () => {
-        console.log('primero');
-        
+        console.log("primero");
+
         try {
             const numberAuth = await loginOdoo();
             if (!numberAuth) return;
@@ -94,12 +94,7 @@ export const updateStockWH = cron.schedule(
             const body = generateBodyOdoo(
                 numberAuth,
                 "stock.quant",
-                [
-                    "|",
-                    "|",
-                    "|",
-                    ["location_id", "=", 8],
-                ],
+                [["location_id", "=", 8]],
                 ["product_id", "location_id", "quantity"]
             );
 
@@ -138,7 +133,7 @@ export const updateStockWH = cron.schedule(
 export const getStockFinal = cron.schedule(
     "00 19 * * *",
     async () => {
-        console.log('segundo')
+        console.log("segundo");
         try {
             const numberAuth = await loginOdoo();
             const dateNow = moment().format("YYYY-MM-DD").toString();
