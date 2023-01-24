@@ -8,5 +8,5 @@ export const theme = extendTheme({
             primary: '#EB5B27',
             secondary: '#523D91',
         },
-    },
+    }
 })

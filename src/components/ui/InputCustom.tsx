@@ -23,7 +23,7 @@ const InputCustom: FC<IProps> = ({ label, ...props }) => {
             <Input
                 borderRadius="2px"
                 padding="6px 8px"
-                margin=" 0.5rem auto"
+                margin="0.5rem auto"
                 size="lg"
                 autoComplete="off"
                 {...field}

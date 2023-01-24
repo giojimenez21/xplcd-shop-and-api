@@ -6,7 +6,7 @@ import { ContainerStyled } from "../../../../styled-components"
 
 const StatisticsPage = () => {
     return (
-        <ContainerStyled margin="2rem auto">
+        <ContainerStyled margin="2rem auto" padding="0.5rem">
             <Text fontSize="xl" fontWeight="bold" marginBottom="1rem">
                 Seleccione el reporte que desea consultar.
             </Text>

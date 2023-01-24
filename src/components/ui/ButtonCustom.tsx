@@ -16,10 +16,10 @@ const ButtonCustom:FC<IProps> = ({text, type = "button", styles, onClick, ...pro
             color="white"
             fontSize="1.5rem"
             _hover={{ color: "gray.200" }}
-            {...styles}
-            {...props}
             type={type}
             onClick={onClick}
+            {...styles}
+            {...props}
         >
             {text}
         </Button>

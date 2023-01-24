@@ -19,8 +19,11 @@ interface IProps {
 }
 
 const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
-    const { userState:{ user }, dispatchUser } = useContext(AuthContext);
-
+    const {
+        userState: { user },
+        dispatchUser,
+    } = useContext(AuthContext);
+    console.log(user);
     const handleLogout = () => {
         localStorage.clear();
         dispatchUser({ type: "logout" });
@@ -34,7 +37,11 @@ const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
                 flexWrap="wrap"
             >
                 {itemsNavbar
-                    .filter((item) => item.role.includes(user.role) || item.role.includes('ALL'))
+                    .filter(
+                        (item) =>
+                            item.role.includes(user.role) ||
+                            item.role.includes("ALL")
+                    )
                     .map((item, i) => (
                         <Link to={`${item.path}`} key={i}>
                             <Button
@@ -46,33 +53,44 @@ const NavbarItems: FC<IProps> = ({ itemsNavbar }) => {
                             </Button>
                         </Link>
                     ))}
-                <Button onClick={handleLogout}>Cerrar sesión</Button>
+                {user.id > 0 && (
+                    <Button onClick={handleLogout}>Cerrar sesión</Button>
+                )}
             </Box>
-            <Menu>
-                <MenuButton
-                    as={IconButton}
-                    aria-label="Options"
-                    icon={<GiHamburgerMenu />}
-                    variant="outline"
-                    color="white"
-                    _hover={{ color: "secondary", backgroundColor: "white" }}
-                    display={["flex", "flex", "none"]}
-                />
-                <MenuList>
-                    {itemsNavbar
-                        .filter((item) => item.role.includes(user.role) || item.role.includes('ALL'))
-                        .map((item, i) => (
-                            <MenuItem key={i}>
-                                <Link to={`${item.path}`} >
-                                    {item.name}
-                                </Link>
+            {user.id > 0 && (
+                <Menu>
+                    <MenuButton
+                        as={IconButton}
+                        aria-label="Options"
+                        icon={<GiHamburgerMenu />}
+                        variant="outline"
+                        color="white"
+                        _hover={{
+                            color: "secondary",
+                            backgroundColor: "white",
+                        }}
+                        display={["flex", "flex", "none"]}
+                    />
+                    <MenuList>
+                        {itemsNavbar
+                            .filter(
+                                (item) =>
+                                    item.role.includes(user.role) ||
+                                    item.role.includes("ALL")
+                            )
+                            .map((item, i) => (
+                                <MenuItem key={i}>
+                                    <Link to={`${item.path}`}>{item.name}</Link>
+                                </MenuItem>
+                            ))}
+                        {user.id > 0 && (
+                            <MenuItem onClick={handleLogout}>
+                                Cerrar sesión
                             </MenuItem>
-                        ))}
-                        <MenuItem onClick={handleLogout}>
-                            Cerrar sesión
-                        </MenuItem>
-                </MenuList>
-            </Menu>
+                        )}
+                    </MenuList>
+                </Menu>
+            )}
         </>
     );
 };
