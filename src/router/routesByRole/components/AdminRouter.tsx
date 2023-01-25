@@ -5,7 +5,7 @@ import { routesAdmin } from "../constants";
 const AdminRouter = () => {
     return (
         <Routes>
-            <Route index element={<Navigate to="usuarios" />} />
+            <Route path="home" element={<h1>Holaaaa</h1>}/>
             {routesAdmin.map((route) => (
                 <Route
                     key={route.path}
@@ -13,7 +13,7 @@ const AdminRouter = () => {
                     element={<route.component />}
                 />
             ))}
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="*" element={<Navigate to="/home" />} />
         </Routes>
     );
 };

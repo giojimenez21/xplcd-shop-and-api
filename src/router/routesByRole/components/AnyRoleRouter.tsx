@@ -9,26 +9,23 @@ const AnyRoleRouter = () => {
     const { userState: { user } } = useContext(AuthContext);
 
     return (
-        <>
-            <Navbar />
-            <Routes>
-                <Route index element={<Navigate to="productos" />} />
-                {routesAnyRole
-                    .filter(
-                        (route) =>
-                            route.role.includes(user.role) ||
-                            route.role.includes("ALL")
-                    )
-                    .map((route) => (
-                        <Route
-                            key={route.path}
-                            path={route.path}
-                            element={<route.component />}
-                        />
-                    ))}
-                <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-        </>
+        <Routes>
+            <Route index element={<Navigate to="productos" />} />
+            {routesAnyRole
+                .filter(
+                    (route) =>
+                        route.role.includes(user.role) ||
+                        route.role.includes("ALL")
+                )
+                .map((route) => (
+                    <Route
+                        key={route.path}
+                        path={route.path}
+                        element={<route.component />}
+                    />
+                ))}
+            <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
     );
 };
 

@@ -14,7 +14,7 @@ const Container:FC<IProps> = ({children, width=["100%","95%","80%"], margin="0 a
             width={width}
             margin={margin}
             padding={padding}
-            maxWidth="1500px"
+            maxWidth="1400px"
         >
             {children}
         </Box>

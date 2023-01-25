@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const PublicRoute: FC<IProps> = ({ children, user }) => {
-    return (user.id == 0) ? children : <Navigate to="/" />;
+    return (user.id == 0) ? children : <Navigate to="/home" />;
 };
 
 export default PublicRoute;

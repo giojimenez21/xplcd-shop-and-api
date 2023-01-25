@@ -8,6 +8,7 @@ import { SpinnerStyled } from "../styled-components";
 import { PrivateRoute, PublicRoute } from "./components";
 import { AdminRouter, AnyRoleRouter } from "./routesByRole";
 import { Layout } from "../components/layout";
+import Main from "../pages/main/Main";
 
 const AppRouter: FC = () => {
     const { isLoading, user } = useRenew();
@@ -20,6 +21,14 @@ const AppRouter: FC = () => {
         <BrowserRouter>
             <Layout>
                 <Routes>
+                    <Route 
+                        index
+                        element={
+                            <PublicRoute user={user}>
+                                <Main />
+                            </PublicRoute>
+                        }
+                    />
                     <Route
                         index
                         path="/login"
@@ -31,7 +40,6 @@ const AppRouter: FC = () => {
                     />
 
                     <Route
-                        index
                         path="/register"
                         element={
                             <PublicRoute user={user}>

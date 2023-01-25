@@ -20,8 +20,9 @@ const FormEditUser: FC<IProps> = ({ valuesForm }) => {
                     .put("/admin/changeAccessListUser", values)
                     .then(() => navigate("/usuarios"));
             }}
+            validateOnChange
         >
-            {({ values: { role }, touched }) => (
+            {({ values: { role } }) => (
                 <Form noValidate>
                     <SelectCustom name="role" value={role} label="Rol">
                         {roles.map((role) => (
@@ -38,7 +39,7 @@ const FormEditUser: FC<IProps> = ({ valuesForm }) => {
                             display: "block",
                         }}
                         type="submit"
-                        disabled={touched.role ? false : true}
+                        disabled={valuesForm.role === role}
                     />
                 </Form>
             )}
