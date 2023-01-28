@@ -14,6 +14,7 @@ const FooterContainerStyled: FC<IProps> = ({ children }) => {
                 gap="1rem"
                 width={["100%", "100%", "100%", "80%"]}
                 margin="auto"
+                paddingY="1rem"
             >
                 {children}
             </Box>

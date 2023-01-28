@@ -10,7 +10,7 @@ const LoginOrRegister = () => {
                 gridColumn="span 4"
                 width="100%"
                 maxWidth="400"
-                margin="auto"
+                marginLeft="auto"
                 display={["none", "none", "initial"]}
             />
             <Box
@@ -31,7 +31,7 @@ const LoginOrRegister = () => {
                     margin="auto"
                     backgroundColor="primary"
                 />
-                <Text fontSize="2xl" fontWeight="bold" marginBottom="3rem">
+                <Text fontSize="2xl" fontWeight="bold" marginBottom="5rem">
                     Registrate para obtener novedades y exclusivas.
                 </Text>
                 <ButtonCustom

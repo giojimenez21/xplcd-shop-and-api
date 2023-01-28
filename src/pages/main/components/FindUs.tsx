@@ -14,9 +14,11 @@ const FindUs = () => {
                 >
                     Encuéntranos
                 </Text>
-                <Text textAlign="center" lineHeight="2rem">
+                <Text marginBottom="1rem">
                     Visita nuestra sucursal ubicada en: <br />
-                    <Icon as={GrLocation} marginX="0.2rem" />
+                </Text>
+                <Text>
+                    <Icon as={GrLocation} marginX="0.2rem" color="orange"/>
                     Eje Central Lázaro Cárdenas 97, Colonia Centro, Centro,
                     Cuauhtémoc, 06000 Ciudad de México, CDMX
                 </Text>

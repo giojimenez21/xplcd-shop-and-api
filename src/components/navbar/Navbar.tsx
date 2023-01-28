@@ -1,11 +1,16 @@
 import { BiSearchAlt } from "react-icons/bi";
+import { useContext } from "react";
 import { Box, Input, InputGroup, InputRightAddon, Text } from "@chakra-ui/react";
 
-import Logo from "../ui/Logo";
-import { itemsNavbar } from "./constants/itemsNavbar";
-import { NavbarContainer, NavbarItems } from "./styled-components";
+import { Logo } from "../ui";
+import { LoginOrRegisterButton, NavbarItems } from "./components";
+import { itemsNavbar } from "./constants/";
+import { AuthContext } from "../../context";
+import { NavbarContainer } from "./styled-components";
 
 const Navbar = () => {
+    const { userState: { user } } = useContext(AuthContext);
+
     return (
         <NavbarContainer>
             <Box
@@ -22,7 +27,11 @@ const Navbar = () => {
                 <Input type="search" placeholder="Buscar productos" backgroundColor="white"/>
                 <InputRightAddon children={<BiSearchAlt size="1.5rem"/>} />
             </InputGroup> */}
-            <NavbarItems itemsNavbar={itemsNavbar} />
+            {
+                user.id > 0 
+                    ? <NavbarItems itemsNavbar={itemsNavbar} /> 
+                    : <LoginOrRegisterButton/>
+            }
         </NavbarContainer>
     );
 };

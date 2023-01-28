@@ -17,9 +17,9 @@ const Layout: FC<IProps> = ({ children }) => {
             flexDirection="column"
             justifyContent="space-between"
         >
-            <Box>
-                <Navbar />
-                {children}
+            <Navbar />
+            <Box flex="1">
+                { children }
             </Box>
             <Footer />
         </Box>

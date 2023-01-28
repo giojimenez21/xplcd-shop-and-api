@@ -14,6 +14,7 @@ const NavbarContainer:FC<IProps> = ({children}) => {
             display="flex"
             justifyContent="space-between"
             flexWrap="wrap"
+            alignItems="center"
         >
             {children}
         </Box>

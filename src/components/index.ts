@@ -1,6 +1,12 @@
+export * from './footer/components';
+export * from './footer/constants';
 export * from './footer';
-export { default as Navbar } from './navbar/Navbar';
-export * from './navbar/constants/itemsNavbar';
+export * from './footer/interfaces/footer.interface';
+export * from './footer/styled-components';
+export * from './layout';
+export * from './navbar/components';
+export * from './navbar/constants';
+export * from './navbar';
 export * from './navbar/styled-components';
 export * from './paginate';
 export * from './ui';

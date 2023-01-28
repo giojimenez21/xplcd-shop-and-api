@@ -9,13 +9,20 @@ import { FooterContainerStyled } from "./styled-components";
 const Footer = () => {
     return (
         <FooterContainerStyled>
-            <Image
-                src={logo}
-                width="200px"
+            <Box
+                alignItems="center"
+                backgroundColor="white"
+                borderRadius="50%"
+                display="flex"
                 gridColumn={["span 10", "span 10", "span 2"]}
-                display="block"
+                height="200px"
+                justifyContent="center"
                 margin="auto"
-            />
+                padding="1.5rem"
+                width="200px"
+            >
+                <Image src={logo}/>
+            </Box>
             {itemsFooter.map((item) => (
                 <ItemsFooter itemFooter={item} key={useId()} />
             ))}

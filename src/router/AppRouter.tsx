@@ -2,13 +2,11 @@ import { FC } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { useRenew } from "../hooks";
-import { Footer } from "../components";
-import { Login, Register } from "../pages";
+import { Layout } from "../components";
+import { Login, Main, Register } from "../pages";
 import { SpinnerStyled } from "../styled-components";
 import { PrivateRoute, PublicRoute } from "./components";
 import { AdminRouter, AnyRoleRouter } from "./routesByRole";
-import { Layout } from "../components/layout";
-import Main from "../pages/main/Main";
 
 const AppRouter: FC = () => {
     const { isLoading, user } = useRenew();

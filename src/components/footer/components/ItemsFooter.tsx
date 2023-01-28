@@ -18,7 +18,7 @@ const ItemsFooterComponent: FC<IProps> = ({ itemFooter }) => {
                     display="block"
                     href={item.path}
                     isExternal={item.isExternal}
-                    margin="0.3rem"
+                    margin="1rem"
                 >
                     {item.name}
                 </Link>
