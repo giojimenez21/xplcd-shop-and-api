@@ -17,7 +17,6 @@ const CardContainer:FC<IProps> = ({children}) => {
             display="flex"
             flexDirection="column"
             gap="1rem"
-            fontSize="lg"
         >
             {children}
         </Box>

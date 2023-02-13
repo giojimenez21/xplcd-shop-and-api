@@ -23,17 +23,21 @@ const Footer = () => {
             >
                 <Image src={logo}/>
             </Box>
+
             {itemsFooter.map((item) => (
                 <ItemsFooter itemFooter={item} key={useId()} />
             ))}
+            
             <Box
                 gridColumn={["span 10", "span 5", "span 2"]}
                 textAlign="center"
             >
                 <TitleItemFooter> ¿Necesitas ayuda? </TitleItemFooter>
                 <Text>
-                    Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-                    dolores facere?
+                    Contáctanos - Planta Baja. <br />
+                    #101 - Whatsapp - 2do piso. <br/>
+                    #210 - 321 - Whatsapp <br/ >
+                    info@xplcdfactory.com
                 </Text>
             </Box>
         </FooterContainerStyled>

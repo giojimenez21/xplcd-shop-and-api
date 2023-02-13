@@ -6,17 +6,17 @@ export const itemsFooter: ItemFooter[] = [
         items: [
             {
                 name: "Facebook",
-                path: "https://www.youtube.com/watch?v=1DhA69K3fZ4",
+                path: "https://m.facebook.com/102593372306522",
                 isExternal: true,
             },
             {
                 name: "Instagram",
-                path: "www.instagram.com",
+                path: "https://www.instagram.com/xplcdfactory/",
                 isExternal: true,
             },
             {
                 name: 'YouTube',
-                path: 'www.youtube.com',
+                path: 'https://www.youtube.com/@xplcdfactory',
                 isExternal: true,
             }
         ],
@@ -26,7 +26,7 @@ export const itemsFooter: ItemFooter[] = [
         items: [
             {
                 name: "Sucursal",
-                path: "",
+                path: "sucursales",
             },
             {
                 name: "¿Cómo llegar?",
@@ -40,15 +40,15 @@ export const itemsFooter: ItemFooter[] = [
         items: [
             {
                 name: "¿Quienes somos?",
-                path: "",
+                path: "quienes-somos",
             },
             {
                 name: "Política de privacidad",
-                path: "",
+                path: "politica-de-privacidad",
             },
             {
                 name: "Términos y condiciones",
-                path: "",
+                path: "terminos-y-condiciones",
             },
         ]
     }

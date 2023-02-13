@@ -3,10 +3,10 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 
 import { useRenew } from "../hooks";
 import { Layout } from "../components";
-import { Login, Main, Register } from "../pages";
 import { SpinnerStyled } from "../styled-components";
 import { PrivateRoute, PublicRoute } from "./components";
 import { AdminRouter, AnyRoleRouter } from "./routesByRole";
+import { AboutUs, Login, Main, Offices, Politics, Register, TermsAndConditions } from "../pages";
 
 const AppRouter: FC = () => {
     const { isLoading, user } = useRenew();
@@ -58,6 +58,11 @@ const AppRouter: FC = () => {
                             </PrivateRoute>
                         }
                     />
+
+                    <Route path="politica-de-privacidad" element={<Politics />}/>
+                    <Route path="quienes-somos" element={<AboutUs />}/>
+                    <Route path="terminos-y-condiciones" element={<TermsAndConditions />}/>
+                    <Route path="sucursales" element={<Offices />}/>
 
                     <Route path="*" element={<Navigate to="/" />} />
                 </Routes>

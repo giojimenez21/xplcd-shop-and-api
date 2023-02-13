@@ -53,7 +53,7 @@ const Order: FC<IProps> = ({ order }) => {
                 </p>
                 <ButtonCustom 
                     text={order.status === 'OPEN' ? 'Cerrar pedido' : 'Reabrir pedido'}
-                    styles={{backgroundColor: "primary", fontSize: "lg"}}
+                    styles={{backgroundColor: "primary"}}
                     onClick={changeStatusOrder}
                 />
             </Box>

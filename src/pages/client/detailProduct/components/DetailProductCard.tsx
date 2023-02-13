@@ -63,7 +63,7 @@ const DetailProductCard = () => {
             >
                 {(formik) => (
                     <Form noValidate>
-                        <Text as="span" fontSize="lg">
+                        <Text as="span">
                             Cantidad:
                         </Text>
                         <NumberInputCustom

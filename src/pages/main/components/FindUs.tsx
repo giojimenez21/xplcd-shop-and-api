@@ -4,7 +4,7 @@ import { Box, Icon, Text } from "@chakra-ui/react";
 const FindUs = () => {
     return (
         <>
-            <Box gridColumn={["span 12", "span 12", "span 6"]} fontSize="lg">
+            <Box gridColumn={["span 12", "span 12", "span 6"]}>
                 <Text
                     as="h2"
                     fontSize="4xl"

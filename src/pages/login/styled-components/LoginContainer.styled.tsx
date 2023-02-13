@@ -12,6 +12,7 @@ const LoginContainer: FC<IProps> = ({ children }) => {
             width="100%"
             gridTemplateColumns="repeat(12, 1fr)"
             padding="1rem"
+            marginY="2rem"
         >
             <Box
                 gridColumn={["1 / 13", "3 / 11", "4 / 10", "5 / 9"]}

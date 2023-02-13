@@ -1,6 +1,8 @@
-import { Box, Image, Text } from "@chakra-ui/react";
-import celphone from "../../../assets/celphone.png";
+import { Link as LinkRouter } from "react-router-dom";
+import { Box, Image, Link, Text } from "@chakra-ui/react";
+
 import { ButtonCustom } from "../../../components";
+import celphone from "../../../assets/celphone.png";
 
 const LoginOrRegister = () => {
     return (
@@ -34,28 +36,45 @@ const LoginOrRegister = () => {
                 <Text fontSize="2xl" fontWeight="bold" marginBottom="5rem">
                     Registrate para obtener novedades y exclusivas.
                 </Text>
-                <ButtonCustom
-                    text="Entrar"
-                    styles={{
-                        display: "block",
-                        margin: "1rem auto",
-                        backgroundColor: "secondary",
-                        width: "100%",
-                        maxWidth: "300px",
-                        letterSpacing: "0.5rem",
+
+                <Link
+                    as={LinkRouter}
+                    to="login"
+                    _hover={{
+                        textDecoration: "none",
                     }}
-                />
-                <ButtonCustom
-                    text="Registrarse"
-                    styles={{
-                        display: "block",
-                        margin: "1rem auto",
-                        backgroundColor: "secondary",
-                        width: "100%",
-                        maxWidth: "300px",
-                        letterSpacing: "0.5rem",
+                >
+                    <ButtonCustom
+                        text="Entrar"
+                        styles={{
+                            display: "block",
+                            margin: "1rem auto",
+                            backgroundColor: "secondary",
+                            width: "100%",
+                            maxWidth: "300px",
+                            letterSpacing: "0.5rem",
+                        }}
+                    />
+                </Link>
+                <Link
+                    as={LinkRouter}
+                    to="login"
+                    _hover={{
+                        textDecoration: "none",
                     }}
-                />
+                >
+                    <ButtonCustom
+                        text="Registrarse"
+                        styles={{
+                            display: "block",
+                            margin: "1rem auto",
+                            backgroundColor: "secondary",
+                            width: "100%",
+                            maxWidth: "300px",
+                            letterSpacing: "0.5rem",
+                        }}
+                    />
+                </Link>
             </Box>
         </>
     );

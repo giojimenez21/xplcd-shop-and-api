@@ -1,3 +1,4 @@
+export * from './aboutUs';
 export * from './admin/pages/editUser/components';
 export * from './admin/pages/editUser/constants';
 export * from './admin/pages/editUser';
@@ -45,5 +46,8 @@ export * from './login/styled-components';
 export * from './main/components';
 export * from './main';
 export * from './main/styled-components';
+export * from './offices';
+export * from './politics';
 export * from './register/components';
 export * from './register';
+export { default as TermsAndConditions } from './termsAndConditions/TermsAndConditions';

@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import AppRouter from "./router/AppRouter";
 
 import { theme } from "./theme";
+import { AppRouter } from "./router";
 import { AuthProvider, ProductProvider } from "./context";
 
 const App = () => {

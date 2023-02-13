@@ -6,7 +6,7 @@ import { Link as RouterLink } from "react-router-dom";
 const LoginOrRegisterButton = () => {
     return (
         <Link
-            color="whiteAlpha.800"
+            color="whiteAlpha.700"
             display="flex"
             alignItems="center"
             gap="0.3rem"
