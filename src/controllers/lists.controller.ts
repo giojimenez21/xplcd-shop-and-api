@@ -10,8 +10,16 @@ export const getLists = async(req: Request, res: Response) => {
         const lists = await Brand.findAll({
             include: {
                 model: ProductByList,
-                attributes: ['name','quality',...roles?.lists!]
-            }
+                attributes: [
+                    "name",
+                    "quality",
+                    "color",
+                    "quantity",
+                    "stock_odoo",
+                    "url_image",
+                    ...roles?.lists!,
+                ],
+            },
         });
 
         return res.status(200).json(lists);

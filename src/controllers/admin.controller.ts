@@ -5,6 +5,8 @@ import { odooClient } from "../clients";
 import { ProductStockDate, ResPartnerLocation, ResultStockDate } from "../interfaces/odoo.interface";
 import { addPreviousAndNext, generateBodyOdoo, generateConditionsOfDates, generatePaginate } from "../helpers";
 import { Brand, ProductByList, ProductOfSale, Sale, StockByDate, User } from "../models";
+import { UploadedFile } from "express-fileupload";
+import { uploadImage } from "../helpers/uploadFiles";
 
 interface Query {
     page: number;
@@ -307,7 +309,11 @@ export const editBrand = async (req: Request<ParamsId>, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
     try {
 
-        await ProductByList.create({ ...req.body });
+        const { tempFilePath } = req.files!.image as UploadedFile;
+
+        const url_image = await uploadImage(tempFilePath, 'products');
+
+        await ProductByList.create({ url_image, ...req.body });
         return res.status(200).json({ msg: "El producto fue creado con exito." });
 
     } catch (error: any) {
@@ -318,7 +324,14 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const editProduct = async (req: Request<ParamsId>, res: Response) => {
     const { id } = req.params;
+    const { image } = req.files!
     try {
+
+        if( image ) {
+            const { tempFilePath } = image as UploadedFile;
+            const url_image = await uploadImage(tempFilePath, 'products');
+            await ProductByList.update({ url_image, ...req.body }, { where: { id } });
+        }
 
         await ProductByList.update({ ...req.body }, { where: { id } });
         return res.status(200).json({ msg: "El producto fue editado con exito." });

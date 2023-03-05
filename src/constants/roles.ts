@@ -38,7 +38,7 @@ interface RolList {
 export const rolesLists:RolList[] = [
     {
         name: 'ADMIN',
-        lists: ['base','xp3','xp4','xp5','public'] // base xp3 xp4 xp5 publico
+        lists: ['id_odoo','base','xp3','xp4','xp5','public'] // base xp3 xp4 xp5 publico
     },
     {
         name: 'MOKA',

@@ -210,3 +210,11 @@ export const getStockFinal = cron.schedule(
         timezone: "America/Mexico_City",
     }
 );
+
+export const initCrons = () => {
+    getStockInitial.start();
+
+    updateStockWH.start();
+
+    getStockFinal.start();
+};
