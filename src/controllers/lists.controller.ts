@@ -11,6 +11,7 @@ export const getLists = async(req: Request, res: Response) => {
             include: {
                 model: ProductByList,
                 attributes: [
+                    "id",
                     "name",
                     "quality",
                     "color",
@@ -68,24 +69,11 @@ export const getListProductDetail = async(req: Request<ParamsListDetail>, res: R
     const { id } = req.params;
     try {
         const product = await ProductByList.findOne({
-            attributes: ["id", "name"],
-            include: [
-                {
-                    model: Brand,
-                    attributes: {exclude: ['color']}
-                },
-                {
-                    model: CompatibilityOfModel,
-                    attributes: {exclude: ['id_product_by_list']}
-                },
-                {
-                    model: VersionByProduct,
-                    attributes: {exclude: ['id_product_by_list']}
-                }
-            ],
             where: { id }
         });
+
         return res.status(200).json(product);
+        
     } catch (error: any) {
         console.log(error);
         return res.status(500).json({ msg: 'Ha ocurrido un error, comuniquese con el administrador.' });

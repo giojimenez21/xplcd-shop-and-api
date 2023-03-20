@@ -14,7 +14,6 @@ interface ProductByListModel extends Model<InferAttributes<ProductByListModel>, 
     public: number;
     quantity: number;
     stock_odoo: number;
-    link_gsm: string;
     id_brand: number;
     id_odoo: number;
     url_image: number;
@@ -57,9 +56,6 @@ export const ProductByList = db.define<ProductByListModel>(
         },
         stock_odoo: {
             type: DataTypes.NUMBER
-        },
-        link_gsm: {
-            type: DataTypes.TEXT
         },
         id_brand: {
             type: DataTypes.NUMBER

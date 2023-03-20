@@ -309,11 +309,14 @@ export const editBrand = async (req: Request<ParamsId>, res: Response) => {
 export const createProduct = async (req: Request, res: Response) => {
     try {
 
-        const { tempFilePath } = req.files!.image as UploadedFile;
+        if(req.files) {
+            const { tempFilePath } = req.files.image as UploadedFile;
+            const url_image = await uploadImage(tempFilePath, 'products');
+            await ProductByList.create({ url_image, ...req.body });
+            return res.status(200).json({ msg: "El producto fue creado con exito." });
+        }
 
-        const url_image = await uploadImage(tempFilePath, 'products');
-
-        await ProductByList.create({ url_image, ...req.body });
+        await ProductByList.create({...req.body });
         return res.status(200).json({ msg: "El producto fue creado con exito." });
 
     } catch (error: any) {
@@ -324,10 +327,11 @@ export const createProduct = async (req: Request, res: Response) => {
 
 export const editProduct = async (req: Request<ParamsId>, res: Response) => {
     const { id } = req.params;
-    const { image } = req.files!
+    
     try {
 
-        if( image ) {
+        if( req.files ) {
+            const { image } = req.files!
             const { tempFilePath } = image as UploadedFile;
             const url_image = await uploadImage(tempFilePath, 'products');
             await ProductByList.update({ url_image, ...req.body }, { where: { id } });
