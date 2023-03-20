@@ -8,6 +8,7 @@ interface ProductByListModel extends Model<InferAttributes<ProductByListModel>, 
     quality: string;
     color: string;
     base: number;
+    base_irving: number;
     xp3: number;
     xp4: number;
     xp5: number;
@@ -37,6 +38,9 @@ export const ProductByList = db.define<ProductByListModel>(
             type: DataTypes.STRING
         },
         base: {
+            type: DataTypes.NUMBER
+        },
+        base_irving: {
             type: DataTypes.NUMBER
         },
         xp3: {

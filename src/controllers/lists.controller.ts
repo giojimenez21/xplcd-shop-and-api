@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { Op } from "sequelize";
 import { rolesLists } from "../constants";
-import { Brand, CompatibilityOfModel, ProductByList, VersionByProduct } from "../models";
+import { Brand, ProductByList } from "../models";
 
 export const getLists = async(req: Request, res: Response) => {
     try {
