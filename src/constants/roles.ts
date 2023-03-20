@@ -73,7 +73,7 @@ export const rolesLists:RolList[] = [
         lists: ['public'] //publico
     },
     {
-        name: 'IRVING',
+        name: 'BASE_IRVING',
         lists: ['base_irving']
     }
 ];

@@ -5,6 +5,7 @@ import { Brand, ProductByList } from "../models";
 
 export const getLists = async(req: Request, res: Response) => {
     try {
+        console.log(req.role);
         const roles = rolesLists.find(roleList => roleList.name === req.role);
         
         const lists = await Brand.findAll({
