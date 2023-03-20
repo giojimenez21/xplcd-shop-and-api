@@ -1,11 +1,10 @@
-import { Request, Response } from "express";
 import { Op } from "sequelize";
+import { Request, Response } from "express";
 import { rolesLists } from "../constants";
 import { Brand, ProductByList } from "../models";
 
 export const getLists = async(req: Request, res: Response) => {
     try {
-        console.log(req.role);
         const roles = rolesLists.find(roleList => roleList.name === req.role);
         
         const lists = await Brand.findAll({
@@ -20,8 +19,9 @@ export const getLists = async(req: Request, res: Response) => {
                     "stock_odoo",
                     "url_image",
                     ...roles?.lists!,
-                ],
+                ]
             },
+            order: [["name", "ASC"], [ProductByList, "name", "ASC"]]
         });
 
         return res.status(200).json(lists);
