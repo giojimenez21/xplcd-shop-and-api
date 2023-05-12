@@ -1,19 +1,17 @@
 import { Sequelize } from "sequelize";
-import configDB from "./keys";
 
-export const db = new Sequelize(configDB.db, configDB.user, configDB.password,{
-    host: configDB.host,
-    port: 3306,
-    dialect: "mysql",
-    define: {
-        timestamps: false,
-    },
-    pool: {
-        max: 5,
-        min: 0,
-        acquire: 30000,
-        idle: 10000,
-    },
-    logging: false,
-    timezone: "-06:00"
-});
+export const db = new Sequelize(
+    process.env.DB_API!,
+    process.env.USER_DB!,
+    process.env.PASSWORD_DB,
+    {
+        host: process.env.HOST,
+        port: 3306,
+        dialect: "mysql",
+        define: {
+            timestamps: false,
+        },
+        logging: false,
+        timezone: "-06:00",
+    }
+);

@@ -4,6 +4,7 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "build": "tsc",
         "start": "NODE_ENV=production node ./dist/index.js",
         "dev": "nodemon ./dist/index.js"
     },
@@ -32,6 +33,7 @@
         "mysql2": "^2.3.3",
         "node-cron": "^3.0.2",
         "odoo-await": "^3.3.0",
-        "sequelize": "^6.25.5"
+        "sequelize": "^6.25.5",
+        "typescript": "^5.0.4"
     }
 }

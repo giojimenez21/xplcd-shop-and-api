@@ -1,5 +1,6 @@
 import cors from 'cors';
 import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
 import fileUpload from 'express-fileupload';
 import { v2 as cloudinary } from 'cloudinary';
@@ -7,7 +8,6 @@ import { v2 as cloudinary } from 'cloudinary';
 import { db } from './database';
 import { createAdmin, initCrons } from './helpers';
 import { routerAdmin, routerAuth, routerLists, routerProducts } from './routes';
-dotenv.config();
 
 const PORT = process.env.PORT || 4000;
 process.env.TZ = "America/Mexico_City";

@@ -1,0 +1,53 @@
+version: "3"
+
+services:
+    xpmanager:
+        depends_on:
+            - db
+        build:
+            context: .
+            dockerfile: Dockerfile
+        image: xpmanager-docker
+        container_name: xpmanager-api
+        restart: always
+        ports:
+            - "${PORT}:${PORT}"
+        environment:
+            PORT: ${PORT}
+            API_ODOO: ${API_ODOO}
+            DB: ${DB}
+            USERNAME: ${USERNAME}
+            PASSWORD: ${PASSWORD}
+            SECRET_JWT: ${SECRET_JWT}
+            NAME_ADMIN: ${NAME_ADMIN}
+            EMAIL_ADMIN: ${EMAIL_ADMIN}
+            PASSWORD_ADMIN: ${PASSWORD_ADMIN}
+            CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
+            CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
+            CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+            USER_DB: ${USER_DB}
+            PASSWORD_DB: ${PASSWORD_DB}
+            HOST: ${HOST}
+            DB_API: ${DB_API}
+    db:
+        image: mysql:5.7
+        container_name: xpmanager-db
+        restart: always
+        volumes:
+            - ./mysql-dump:/docker-entrypoint-initdb.d
+            - ./db-data:/var/lib/mysql
+        command: --default-authentication-plugin=mysql_native_password
+        environment:
+            MYSQL_ROOT_PASSWORD: ${PASSWORD_DB}
+        ports:
+            - 3306:3306
+    
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        environment:
+            PMA_HOST: xpmanager-db 
+            PMA_PORT: 3306
+        ports:
+            - 8080:80
+        depends_on:
+            - db
